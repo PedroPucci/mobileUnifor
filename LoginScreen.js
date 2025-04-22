@@ -17,8 +17,9 @@ export default function LoginScreen({ navigation }) {
   const handleLogin = () => {
     if (email && senha) {
       Alert.alert("Logado", `Email: ${email}`);
+      navigation.navigate("Home");
     } else {
-      Alert.alert("Erro", "Preencha todos os campos.");
+      Alert.alert("Erro", "Verifique se o email e senha estão corretas.");
     }
   };
 
@@ -59,7 +60,7 @@ export default function LoginScreen({ navigation }) {
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Log In</Text>
+        <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
     </View>
   );
