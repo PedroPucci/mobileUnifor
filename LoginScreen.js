@@ -1,25 +1,3 @@
-// import React from 'react';
-// import { View, Text, StyleSheet } from 'react-native';
-
-// export default function LoginScreen() {
-//   return (
-//     <View style={styles.container}>
-//       <Text style={styles.text}>Tela de Login</Text>
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//   },
-//   text: {
-//     fontSize: 18,
-//   },
-// });
-
 import React, { useState } from "react";
 import {
   View,
@@ -37,7 +15,6 @@ export default function LoginScreen({ navigation }) {
   const [senha, setSenha] = useState("");
 
   const handleLogin = () => {
-    // Aqui você pode validar e chamar sua API
     if (email && senha) {
       Alert.alert("Logado", `Email: ${email}`);
     } else {
@@ -47,7 +24,6 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {/* Logo */}
       <Image
         source={{
           uri: "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg",
@@ -55,7 +31,6 @@ export default function LoginScreen({ navigation }) {
         style={styles.logo}
       />
 
-      {/* Tabs */}
       <RegisterLoginTabs
         selected="Entrar"
         onTabChange={(tab) => {
@@ -63,7 +38,8 @@ export default function LoginScreen({ navigation }) {
         }}
       />
 
-      {/* Inputs */}
+      <Text style={[styles.tituloLogin]}>Seja bem vindo!</Text>
+
       <InputWithIcon
         placeholder="Email"
         icon="mail"
@@ -78,12 +54,10 @@ export default function LoginScreen({ navigation }) {
         onChangeText={setSenha}
       />
 
-      {/* Recuperar senha */}
-      <TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate("RecuperarSenha")}>
         <Text style={styles.forgot}>Recuperar senha?</Text>
       </TouchableOpacity>
 
-      {/* Botão Log In */}
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Log In</Text>
       </TouchableOpacity>
@@ -121,5 +95,11 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
   },
+  tituloLogin: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "purple",
+    alignSelf: "center",
+    marginBottom: 20,
+  },
 });
-

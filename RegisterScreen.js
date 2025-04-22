@@ -65,6 +65,8 @@ export default function RegisterScreen({ navigation }) {
         style={styles.logo}
       />
 
+      <Text style={styles.tituloCadastro}>Faça seu cadastro!</Text>
+
       <RegisterLoginTabs
         onTabChange={(tab) => {
           setSelectedTab(tab);
@@ -127,4 +129,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   buttonText: { color: "#fff", fontWeight: "bold" },
+  tituloCadastro: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: "purple",
+    alignSelf: "center",
+    marginBottom: 20,
+  },
 });
