@@ -7,8 +7,8 @@ import {
   Image,
   Alert,
 } from "react-native";
-import InputWithIcon from "./components/InputWithIcon";
-import RegisterLoginTabs from "./components/RegisterLoginTabs";
+import InputWithIcon from "../InputWithIcon";
+import RegisterLoginTabs from "../RegisterLoginTabs";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");

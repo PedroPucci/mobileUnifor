@@ -8,7 +8,7 @@ import {
   Alert,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import styles from "./styles";
+import styles from "../styles";
 
 export default function RecuperarSenhaScreen({ navigation }) {
   const [email, setEmail] = useState("");

@@ -7,8 +7,8 @@ import {
   Image,
   Alert,
 } from "react-native";
-import InputWithIcon from "./components/InputWithIcon";
-import RegisterLoginTabs from "./components/RegisterLoginTabs";
+import InputWithIcon from "../InputWithIcon";
+import RegisterLoginTabs from "../RegisterLoginTabs";
 
 export default function RegisterScreen({ navigation }) {
   const [selectedTab, setSelectedTab] = useState("Registrar");
@@ -30,7 +30,7 @@ export default function RegisterScreen({ navigation }) {
     };
 
     try {
-      const response = await fetch("http://192.168.0.11:5000/api/v1/users", {
+      const response = await fetch("http://localhost:5000/api/v1/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
