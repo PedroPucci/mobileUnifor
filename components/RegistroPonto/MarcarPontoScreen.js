@@ -24,7 +24,9 @@ export default function MarcarPontoScreen({ navigation }) {
         resizeMode="contain"
       />
 
-      <Text style={styles.dataText}>24/05</Text>
+      <Text style={styles.dataText}>
+        {new Date().toLocaleDateString("pt-BR")}
+      </Text>
 
       <View style={styles.inputContainer}>
         <Feather name="clock" size={20} color="#999" style={styles.icon} />
