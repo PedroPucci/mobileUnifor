@@ -24,7 +24,7 @@ Criar um sistema de ponto para os usuários. Nesse sistema é preciso que cria u
 ## **Como Executar o Projeto**
 ### **1. Testar na versão Web**
 1. Faça o clone do projeto.
-2. Abra o terminar e digite expo start.   
+2. Abra o terminar e digite npx expo start.   
 3. Tecle W e será aberto uma pagina na web.
 
 ### **2. Testar na versão Mobile**
