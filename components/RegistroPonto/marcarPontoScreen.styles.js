@@ -1,0 +1,69 @@
+import { StyleSheet } from "react-native";
+
+export default StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    paddingTop: 60,
+    alignItems: "center",
+    paddingHorizontal: 20,
+  },
+  buttonVoltar: {
+    position: "absolute",
+    top: 40,
+    right: 20,
+  },
+  buttonVoltarText: {
+    color: "#1877f2",
+    fontWeight: "bold",
+  },
+  logo: {
+    width: 140,
+    height: 140,
+    alignSelf: "center",
+    marginTop: 70,
+    marginBottom: 20,
+  },
+  dataText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 30,
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    backgroundColor: "#f9f9f9",
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    marginBottom: 15,
+    width: "100%",
+    height: 50,
+  },
+  icon: {
+    marginRight: 8,
+  },
+  input: {
+    flex: 1,
+    height: "100%",
+    fontSize: 16,
+    color: "#333",
+  },
+  buttonMarcar: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#1877f2",
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 10,
+    marginTop: 20,
+    width: "90%",
+    justifyContent: "center",
+  },
+  buttonMarcarText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+});

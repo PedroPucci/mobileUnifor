@@ -46,7 +46,10 @@ export default function HomeScreen({ navigation }) {
 
         <View style={styles.separator} />
 
-        <TouchableOpacity style={styles.menuItem}>
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={() => navigation.navigate("MarcarPonto")}
+        >
           <Feather name="clock" size={20} color="#fff" />
         </TouchableOpacity>
 

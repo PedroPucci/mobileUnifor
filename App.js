@@ -7,6 +7,7 @@ import RecuperarSenhaScreen from "./components/RecuperarSenha/RecuperarSenhaScre
 import HomeScreen from "./components/Home/HomeScreen";
 import EditarPerfilScreen from "./components/Editar/EditarPerfilScreen";
 import EnviarSolicitacaoScreen from "./components/Justificativa/EnviarSolicitacaoScreen";
+import MarcarPontoScreen from "./components/RegistroPonto/MarcarPontoScreen";
 
 const Stack = createStackNavigator();
 
@@ -19,6 +20,7 @@ export default function App() {
         <Stack.Screen name="RecuperarSenha" component={RecuperarSenhaScreen} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="EditarPerfil" component={EditarPerfilScreen} />
+        <Stack.Screen name="MarcarPonto" component={MarcarPontoScreen} />
         <Stack.Screen
           name="EnviarSolicitacao"
           component={EnviarSolicitacaoScreen}
