@@ -1,0 +1,118 @@
+import { StyleSheet } from "react-native";
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    paddingTop: 60,
+    alignItems: "center",
+    paddingHorizontal: 20,
+  },
+  buttonVoltar: {
+    position: "absolute",
+    top: 40,
+    right: 20,
+  },
+  buttonVoltarText: {
+    color: "#1877f2",
+    fontWeight: "bold",
+  },
+  dropdown: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderWidth: 1,
+    borderColor: "#ddd",
+    backgroundColor: "#f9f9f9",
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    paddingVertical: 12,
+    width: "100%",
+    marginBottom: 30,
+    elevation: 3,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
+  },
+  dropdownText: {
+    color: "#999",
+    fontSize: 16,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.3)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 20,
+    width: "80%",
+  },
+  optionButton: {
+    paddingVertical: 15,
+    borderBottomColor: "#eee",
+    borderBottomWidth: 1,
+  },
+  optionText: {
+    fontSize: 16,
+    color: "#333",
+  },
+  textAreaPlaceholder: {
+    width: "100%",
+    height: 200,
+    backgroundColor: "#ddd",
+    borderRadius: 20,
+    marginBottom: 40,
+    marginTop: 10,
+  },
+  sendButton: {
+    backgroundColor: "#1877f2",
+    paddingVertical: 15,
+    paddingHorizontal: 50,
+    borderRadius: 10,
+    marginBottom: 20,
+    width: "90%",
+    alignItems: "center",
+  },
+  sendButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  backToHomeButton: {
+    backgroundColor: "#1877f2",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    width: "60%",
+    alignItems: "center",
+  },
+  backToHomeButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 14,
+  },
+  logo: {
+    width: 140,
+    height: 140,
+    alignSelf: "center",
+    marginBottom: 30,
+  },
+  textAreaPlaceholder: {
+    width: "100%",
+    height: 200,
+    backgroundColor: "#f2f2f2",
+    borderRadius: 20,
+    padding: 15,
+    fontSize: 16,
+    textAlignVertical: "top",
+    marginBottom: 40,
+    marginTop: 10,
+    color: "#333",
+  },
+});
+
+export default styles;

@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import styles from "./homeScreen.styles";
 
 export default function HomeScreen({ navigation }) {
   const handleLogout = () => {
@@ -18,13 +19,10 @@ export default function HomeScreen({ navigation }) {
       </TouchableOpacity>
 
       <Image
-        source={{
-          uri: "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg",
-        }}
+        source={require("../../assets/logo6.jpg")}
         style={styles.logo}
+        resizeMode="contain"
       />
-
-      <Text style={styles.title}>Home</Text>
 
       <View style={styles.card}>
         <Text style={styles.cardText}>
@@ -38,84 +36,35 @@ export default function HomeScreen({ navigation }) {
         </Text>
       </View>
 
-      <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navItem}>
+      <View style={styles.menuContainer}>
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={() => navigation.navigate("EnviarSolicitacao")}
+        >
           <Feather name="message-square" size={20} color="#000" />
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.navItem, styles.active]}>
-          <Feather name="alert-circle" size={20} color="#fff" />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+
+        <View style={styles.separator} />
+
+        <TouchableOpacity style={styles.menuItem}>
           <Feather name="clock" size={20} color="#fff" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+
+        <View style={styles.separator} />
+
+        <TouchableOpacity style={styles.menuItem}>
           <Feather name="calendar" size={20} color="#fff" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
+
+        <View style={styles.separator} />
+
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={() => navigation.navigate("EditarPerfil")}
+        >
           <Feather name="user" size={20} color="#fff" />
         </TouchableOpacity>
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    padding: 20,
-    justifyContent: "space-between",
-  },
-  logoutButton: {
-    position: "absolute",
-    top: 40,
-    right: 20,
-    flexDirection: "row",
-    alignItems: "center",
-    zIndex: 1,
-  },
-  logoutText: {
-    marginLeft: 5,
-    color: "#1877f2",
-    fontWeight: "bold",
-  },
-  logo: {
-    width: 60,
-    height: 60,
-    alignSelf: "center",
-    marginTop: 60,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#000",
-    alignSelf: "center",
-    marginVertical: 10,
-  },
-  card: {
-    borderWidth: 1,
-    borderColor: "#aaa",
-    borderRadius: 10,
-    padding: 15,
-    marginVertical: 10,
-  },
-  cardText: {
-    fontSize: 14,
-    color: "#333",
-  },
-  navbar: {
-    flexDirection: "row",
-    backgroundColor: "#1877f2",
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
-    paddingVertical: 10,
-    justifyContent: "space-around",
-  },
-  navItem: {
-    padding: 10,
-  },
-  active: {
-    backgroundColor: "#0f62d0",
-    borderRadius: 10,
-  },
-});

@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  StyleSheet,
   TouchableOpacity,
   Image,
   Alert,
 } from "react-native";
 import InputWithIcon from "../InputWithIcon";
 import RegisterLoginTabs from "../RegisterLoginTabs";
+import styles from "./loginScreen.styles";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -16,7 +16,6 @@ export default function LoginScreen({ navigation }) {
 
   const handleLogin = () => {
     if (email && senha) {
-      Alert.alert("Logado", `Email: ${email}`);
       navigation.navigate("Home");
     } else {
       Alert.alert("Erro", "Verifique se o email e senha estão corretas.");
@@ -26,10 +25,9 @@ export default function LoginScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Image
-        source={{
-          uri: "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg",
-        }}
+        source={require("../../assets/logo6.jpg")}
         style={styles.logo}
+        resizeMode="contain"
       />
 
       <RegisterLoginTabs
@@ -65,42 +63,3 @@ export default function LoginScreen({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 24,
-    justifyContent: "center",
-    backgroundColor: "#fff",
-  },
-  logo: {
-    width: 60,
-    height: 60,
-    alignSelf: "center",
-    marginBottom: 30,
-  },
-  forgot: {
-    color: "#1877f2",
-    alignSelf: "flex-end",
-    marginTop: -10,
-    marginBottom: 15,
-  },
-  button: {
-    backgroundColor: "#1877f2",
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-    width: "100%",
-  },
-  buttonText: {
-    color: "#fff",
-    fontWeight: "bold",
-  },
-  tituloLogin: {
-    fontSize: 22,
-    fontWeight: "bold",
-    color: "purple",
-    alignSelf: "center",
-    marginBottom: 20,
-  },
-});

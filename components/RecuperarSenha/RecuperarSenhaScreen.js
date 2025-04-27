@@ -13,25 +13,44 @@ import styles from "../styles";
 export default function RecuperarSenhaScreen({ navigation }) {
   const [email, setEmail] = useState("");
 
-  const handleRecuperar = () => {
+  const handleRecuperar = async () => {
     if (!email) {
       Alert.alert("Erro", "Informe o email.");
       return;
     }
 
-    Alert.alert(
-      "Pronto!",
-      "Um link de recuperação foi enviado para seu e-mail."
-    );
-    setEmail("");
+    const payload = { email: email };
+
+    try {
+      const response = await fetch(
+        "http://192.168.0.11:5000/api/v1/auth",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("Recuperando senha...");
+        Alert.alert("Sucesso", "Uma nova senha foi enviada para seu e-mail!");
+        setEmail("");
+      } else {
+        Alert.alert("Erro", data.message || "Erro ao recuperar senha.");
+      }
+    } catch (err) {
+      console.error(err);
+      Alert.alert("Erro de conexão", "Verifique se a API está rodando.");
+    }
   };
 
   return (
     <View style={styles.container_principal}>
+
       <Image
-        source={{
-          uri: "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg",
-        }}
+        source={require("../../assets/logo6.jpg")}
         style={styles.logo}
         resizeMode="contain"
       />

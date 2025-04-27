@@ -1,14 +1,8 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Alert,
-} from "react-native";
+import { View, Text, TouchableOpacity, Image, Alert } from "react-native";
 import InputWithIcon from "../InputWithIcon";
 import RegisterLoginTabs from "../RegisterLoginTabs";
+import styles from "./registerScreen.styles";
 
 export default function RegisterScreen({ navigation }) {
   const [selectedTab, setSelectedTab] = useState("Registrar");
@@ -19,7 +13,13 @@ export default function RegisterScreen({ navigation }) {
   const [cargaHoraria, setCargaHoraria] = useState("");
   const [telefone, setTelefone] = useState("");
 
+  const servidoresPermitidos = ["gmail.com", "hotmail.com"];
+
   const handleRegister = async () => {
+    if (!validarCamposCadastro(nome, email, senha, cargaHoraria, telefone)) {
+      return;
+    }
+
     const payload = {
       fullName: nome,
       email: email,
@@ -30,7 +30,7 @@ export default function RegisterScreen({ navigation }) {
     };
 
     try {
-      const response = await fetch("http://localhost:5000/api/v1/users", {
+      const response = await fetch("http://192.168.0.11:5000/api/v1/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -46,7 +46,7 @@ export default function RegisterScreen({ navigation }) {
         setEmail("");
         setSenha("");
         setCargaHoraria("");
-        setTelefone("");        
+        setTelefone("");
       } else {
         Alert.alert("Erro", data.message || "Erro ao cadastrar.");
       }
@@ -55,14 +55,65 @@ export default function RegisterScreen({ navigation }) {
     }
   };
 
+  // ✅ Função de validação dos campos
+  const validarCamposCadastro = (
+    nome,
+    email,
+    senha,
+    cargaHoraria,
+    telefone
+  ) => {
+    if (!nome || !email || !senha || !cargaHoraria || !telefone) {
+      Alert.alert("Erro", "Preencha todos os campos antes de se cadastrar.");
+      return false;
+    }
+
+    if (telefone.length < 8 || telefone.length > 11) {
+      Alert.alert("Erro", "Telefone inválido. Informe 8 ou 11 dígitos.");
+      return false;
+    }
+
+    const cargaHorariaInt = parseInt(cargaHoraria);
+    if (
+      isNaN(cargaHorariaInt) ||
+      cargaHorariaInt < 10 ||
+      cargaHorariaInt > 100
+    ) {
+      Alert.alert("Erro", "Carga horária deve ser entre 10 e 100 horas.");
+      return false;
+    }
+
+    if (!isValidEmail(email)) {
+      Alert.alert(
+        "Erro",
+        `Email inválido. Use um dos domínios permitidos: ${servidoresPermitidos.join(
+          ", "
+        )}.`
+      );
+      return false;
+    }
+
+    return true;
+  };
+
+  // ✅ Função de validação de email
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+      return false;
+    }
+
+    const dominio = email.split("@")[1]?.toLowerCase();
+    return servidoresPermitidos.includes(dominio);
+  };
 
   return (
     <View style={styles.container}>
       <Image
-        source={{
-          uri: "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg",
-        }}
+        source={require("../../assets/logo6.jpg")}
         style={styles.logo}
+        resizeMode="contain"
       />
 
       <Text style={styles.tituloCadastro}>Faça seu cadastro!</Text>
@@ -97,13 +148,15 @@ export default function RegisterScreen({ navigation }) {
         placeholder="Carga horária"
         icon="clock"
         value={cargaHoraria}
-        onChangeText={setCargaHoraria}
+        keyboardType="numeric"
+        onChangeText={(text) => setCargaHoraria(text.replace(/[^0-9]/g, ""))}
       />
       <InputWithIcon
         placeholder="Telefone"
         icon="phone"
         value={telefone}
-        onChangeText={setTelefone}
+        keyboardType="numeric"
+        onChangeText={(text) => setTelefone(text.replace(/[^0-9]/g, ""))}
       />
 
       <TouchableOpacity style={styles.button} onPress={handleRegister}>
@@ -112,28 +165,3 @@ export default function RegisterScreen({ navigation }) {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 24,
-    justifyContent: "center",
-    backgroundColor: "#fff",
-  },
-  logo: { width: 60, height: 60, alignSelf: "center", marginBottom: 30 },
-  button: {
-    backgroundColor: "#1877f2",
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-    marginTop: 10,
-  },
-  buttonText: { color: "#fff", fontWeight: "bold" },
-  tituloCadastro: {
-    fontSize: 22,
-    fontWeight: "bold",
-    color: "purple",
-    alignSelf: "center",
-    marginBottom: 20,
-  },
-});
