@@ -6,6 +6,7 @@ import {
   TextInput,
   Image,
   Modal,
+  Alert,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import styles from "./enviarSolicitacao.styles";
@@ -19,6 +20,23 @@ export default function EnviarSolicitacaoScreen({ navigation }) {
   const handleSelectOption = (option) => {
     setSelectedOption(option);
     setModalVisible(false);
+  };
+
+  const handleEnviarSolicitacao = () => {
+    if (!selectedOption) {
+      Alert.alert("Erro", "Por favor, selecione o seu caso antes de enviar.");
+      return;
+    }
+    
+    if (!mensagem.trim()) {
+      Alert.alert("Erro", "Por favor, digite sua solicitação antes de enviar.");
+      return;
+    }
+
+    Alert.alert("Sucesso", "Solicitação enviada com sucesso!");
+
+    setMensagem("");
+    setSelectedOption("");
   };
 
   return (
@@ -80,11 +98,12 @@ export default function EnviarSolicitacaoScreen({ navigation }) {
         onChangeText={setMensagem}
       />
 
-      <TouchableOpacity style={styles.sendButton}>
+      <TouchableOpacity
+        style={styles.sendButton}
+        onPress={handleEnviarSolicitacao}
+      >
         <Text style={styles.sendButtonText}>Enviar solicitação</Text>
       </TouchableOpacity>
-
-
     </View>
   );
 }
