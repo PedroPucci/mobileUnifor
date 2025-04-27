@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TouchableOpacity, TextInput, Image } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import styles from "./marcarPontoScreen.styles"; // Importando o novo CSS separado
+import styles from "./marcarPontoScreen.styles";
 
 export default function MarcarPontoScreen({ navigation }) {
   const [entrada1, setEntrada1] = useState("");
