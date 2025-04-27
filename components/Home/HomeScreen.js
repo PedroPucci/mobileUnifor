@@ -41,7 +41,7 @@ export default function HomeScreen({ navigation }) {
           style={styles.menuItem}
           onPress={() => navigation.navigate("EnviarSolicitacao")}
         >
-          <Feather name="message-square" size={20} color="#000" />
+          <Feather name="edit-3" size={20} color="#fff" />
         </TouchableOpacity>
 
         <View style={styles.separator} />
@@ -55,7 +55,10 @@ export default function HomeScreen({ navigation }) {
 
         <View style={styles.separator} />
 
-        <TouchableOpacity style={styles.menuItem}>
+        <TouchableOpacity
+          style={styles.menuItem}
+          onPress={() => navigation.navigate("Frequencia")}
+        >
           <Feather name="calendar" size={20} color="#fff" />
         </TouchableOpacity>
 
