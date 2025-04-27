@@ -1,11 +1,44 @@
-# Sample Snack app
+# **Descrição**
+Criar um sistema de ponto para os usuários. Nesse sistema é preciso que cria um usuário, depois é feito o login. As demais funções são cadastrar os registros de pontos de entrada e saída, visualizar os dias com as presenças e por fim tem a função para cadastrar uma justificativa para ausência do dia ou atraso do dia.
 
-Open the `App.js` file to start writing some code. You can preview the changes directly on your phone or tablet by scanning the **QR code** or use the iOS or Android emulators. When you're done, click **Save** and share the link!
+## **Requisitos Funcionais**
+1. Usuários(Create/Update): O sistema permite a criação de novos usuários, como também a atualização de dados desse mesmo usuário.
+2. Registrar de ponto(Create): O sistema permite que o usuário registre seus pontos de entrada e saída (entrada 1, saída 1, entrada 2 e saída 2).
+3. Justificativa(Create): O sistema permite que o usuário envie justificativas para esclarecer ausência e atrasos do dia.
+4. Autenticação: Implementar recursos de registro e login para os usuários.
 
-When you're ready to see everything that Expo provides (or if you want to use your own editor) you can **Download** your project and use it with [expo cli](https://docs.expo.dev/get-started/installation/#expo-cli)).
+### **Detalhes Técnicos**
+1. Pasta components: possui as pastas com os arquivos de cada tela, arquivos JS comuns e arquivos de configuração.
+2. Pasta assets: pasta com as imagens do projeto.
+3. Arquivo App.js: arquivo responsável por chamar as telas.
+---
+# **Solução**
+## **IDE's Utilizadas**
+- Visual Code.
+- Expo.
+---
+## **Recursos do Projeto**
+- **Bibliotecas**: bibliotecas que o projeto precisou, exemplo: icons, calendar.
+- **Expo**: projeto criado no expo e exportado para Visual Code.
+---
+## **Como Executar o Projeto**
+### **1. Testar na versão Web**
+1. Faça o clone do projeto.
+2. Abra o terminar e digite expo start.   
+3. Tecle W e será aberto uma pagina na web.
 
-All projects created in Snack are publicly available, so you can easily share the link to this project via link, or embed it on a web page with the `<>` button.
+### **2. Testar na versão Mobile**
+1. Faça o clone do projeto.
+2. Abra o terminar e digite expo start.   
+3. Com o aplicativo do Expo instalado no celular, abra e leia o QR Code gerado.
 
-If you're having problems, you can tweet to us [@expo](https://twitter.com/expo) or ask in our [forums](https://forums.expo.dev/c/expo-dev-tools/61) or [Discord](https://chat.expo.dev/).
-
-Snack is Open Source. You can find the code on the [GitHub repo](https://github.com/expo/snack).
+**Observações:**
+- Para testar com a API, é necessário subir a API.
+- Testar sem API é possível.
+### **Estrutura do Projeto**
+Essa estrutura garante organização das pastas.
+## **Components**
+Contém os endpoints para acesso e execução das funcionalidades:
+1. Organização das pastas:
+- **Components**: Possui todas as pastas de todas as telas.
+---
