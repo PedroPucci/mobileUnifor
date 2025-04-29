@@ -52,6 +52,24 @@ export default function EnviarSolicitacaoScreen({ navigation }) {
       return;
     }
 
+    if (!dataSelecionada) {
+      Alert.alert("Erro", "Por favor, selecione a data da ocorrência.");
+      return;
+    }
+
+    // Verifica se a data é maior que a data de hoje
+    const hoje = new Date();
+    const dataSelecionadaObj = new Date(dataSelecionada);
+
+    // Zera as horas para comparar apenas datas
+    hoje.setHours(0, 0, 0, 0);
+    dataSelecionadaObj.setHours(0, 0, 0, 0);
+
+    if (dataSelecionadaObj > hoje) {
+      Alert.alert("Erro", "A data da ocorrência não pode ser no futuro.");
+      return;
+    }
+
     Alert.alert("Sucesso", "Solicitação enviada com sucesso!");
     setMensagem("");
     setSelectedOption("");
