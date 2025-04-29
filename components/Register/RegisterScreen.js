@@ -145,7 +145,7 @@ export default function RegisterScreen({ navigation }) {
         onChangeText={setSenha}
       />
       <InputWithIcon
-        placeholder="Carga horária"
+        placeholder="Carga horária mensal"
         icon="clock"
         value={cargaHoraria}
         keyboardType="numeric"

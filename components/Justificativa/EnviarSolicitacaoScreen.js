@@ -9,17 +9,31 @@ import {
   Alert,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import { Calendar } from "react-native-calendars";
 import styles from "./enviarSolicitacao.styles";
 
 export default function EnviarSolicitacaoScreen({ navigation }) {
   const [selectedOption, setSelectedOption] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [mensagem, setMensagem] = useState("");
+  const [calendarVisible, setCalendarVisible] = useState(false);
+  const [dataSelecionada, setDataSelecionada] = useState("");
+
   const options = ["Ausência", "Esquecimento"];
+
+  const formatarDataPtBr = (isoDateStr) => {
+    const [ano, mes, dia] = isoDateStr.split("-");
+    return `${dia}/${mes}/${ano}`;
+  };
 
   const handleSelectOption = (option) => {
     setSelectedOption(option);
     setModalVisible(false);
+  };
+
+  const handleDayPress = (day) => {
+    setDataSelecionada(day.dateString);
+    setCalendarVisible(false);
   };
 
   const handleEnviarSolicitacao = () => {
@@ -27,16 +41,21 @@ export default function EnviarSolicitacaoScreen({ navigation }) {
       Alert.alert("Erro", "Por favor, selecione o seu caso antes de enviar.");
       return;
     }
-    
+
+    if (!dataSelecionada) {
+      Alert.alert("Erro", "Por favor, selecione a data da ocorrência.");
+      return;
+    }
+
     if (!mensagem.trim()) {
       Alert.alert("Erro", "Por favor, digite sua solicitação antes de enviar.");
       return;
     }
 
     Alert.alert("Sucesso", "Solicitação enviada com sucesso!");
-
     setMensagem("");
     setSelectedOption("");
+    setDataSelecionada("");
   };
 
   return (
@@ -85,6 +104,77 @@ export default function EnviarSolicitacaoScreen({ navigation }) {
                 <Text style={styles.optionText}>{option}</Text>
               </TouchableOpacity>
             ))}
+          </View>
+        </TouchableOpacity>
+      </Modal>
+
+      {/* Botão que abre o calendário */}
+      <TouchableOpacity
+        style={styles.datePickerButton}
+        onPress={() => setCalendarVisible(true)}
+      >
+        <Text style={styles.dropdownText}>
+          {dataSelecionada
+            ? `Data: ${formatarDataPtBr(dataSelecionada)}`
+            : "Escolha a data"}
+        </Text>
+      </TouchableOpacity>
+
+      {/* Modal com calendário */}
+      <Modal
+        visible={calendarVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setCalendarVisible(false)}
+      >
+        <TouchableOpacity
+          style={styles.modalOverlay}
+          activeOpacity={1}
+          onPressOut={() => setCalendarVisible(false)}
+        >
+          <View style={styles.calendarModalContent}>
+            <Calendar
+              onDayPress={handleDayPress}
+              monthFormat={"MMMM yyyy"}
+              firstDay={1}
+              hideExtraDays={false}
+              renderHeader={(date) => {
+                const meses = [
+                  "Janeiro",
+                  "Fevereiro",
+                  "Março",
+                  "Abril",
+                  "Maio",
+                  "Junho",
+                  "Julho",
+                  "Agosto",
+                  "Setembro",
+                  "Outubro",
+                  "Novembro",
+                  "Dezembro",
+                ];
+                const mes = meses[date.getMonth()];
+                const ano = date.getFullYear();
+                return (
+                  <View style={styles.headerCalendar}>
+                    <Text style={styles.headerText}>
+                      {mes} {ano}
+                    </Text>
+                  </View>
+                );
+              }}
+              theme={{
+                backgroundColor: "#fff",
+                calendarBackground: "#fff",
+                todayTextColor: "#1877f2",
+                arrowColor: "#1877f2",
+                textDayFontWeight: "bold",
+                textMonthFontWeight: "bold",
+                textDayHeaderFontWeight: "bold",
+                textDayStyle: { fontSize: 16 },
+                textMonthStyle: { fontSize: 18 },
+              }}
+            />
           </View>
         </TouchableOpacity>
       </Modal>

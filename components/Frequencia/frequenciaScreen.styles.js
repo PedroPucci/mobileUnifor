@@ -69,7 +69,7 @@ export default StyleSheet.create({
     color: "#333",
   },
   infoContainer: {
-    marginTop: 10,
+    marginTop: 8,
   },
   infoText: {
     fontSize: 18,
@@ -77,7 +77,7 @@ export default StyleSheet.create({
   },
   boldText: {
     fontWeight: "bold",
-    fontSize: 20,
+    fontSize: 15,
     color: "#000",
   },
   tooltipBox: {

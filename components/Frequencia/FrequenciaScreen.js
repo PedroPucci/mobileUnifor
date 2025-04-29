@@ -65,51 +65,48 @@ export default function FrequenciaScreen({ navigation }) {
         />
       </View>
 
-      <View style={styles.questionContainer}>
-        <TouchableOpacity
-          style={styles.tooltipButton}
-          onPress={() => setTooltipVisible(true)}
-        >
-          <Image
-            source={require("../../assets/question.png")}
-            style={styles.questionIcon}
-            resizeMode="contain"
-          />
-        </TouchableOpacity>
-      </View>
-
-      <Modal
-        transparent
-        visible={tooltipVisible}
-        animationType="fade"
-        onRequestClose={() => setTooltipVisible(false)}
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "center",
+          flexWrap: "wrap",
+          marginTop: 10,
+          marginBottom: 16,
+        }}
       >
-        <TouchableOpacity
-          style={styles.overlay}
-          activeOpacity={1}
-          onPressOut={() => setTooltipVisible(false)}
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginHorizontal: 8,
+          }}
         >
-          <View style={styles.tooltipBox}>
-            <Text style={styles.tooltipTitle}>Legenda</Text>
-            <View style={styles.separator} />
+          <View style={[styles.colorDot, { backgroundColor: "red" }]} />
+          <Text style={{ fontSize: 12 }}>Ponto não registrado</Text>
+        </View>
 
-            <View style={styles.legendItem}>
-              <View style={[styles.colorDot, { backgroundColor: "red" }]} />
-              <Text style={styles.legendText}>Ponto não registrado</Text>
-            </View>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginHorizontal: 8,
+          }}
+        >
+          <View style={[styles.colorDot, { backgroundColor: "blue" }]} />
+          <Text style={{ fontSize: 12 }}>Presença 100%</Text>
+        </View>
 
-            <View style={styles.legendItem}>
-              <View style={[styles.colorDot, { backgroundColor: "blue" }]} />
-              <Text style={styles.legendText}>Presença 100%</Text>
-            </View>
-
-            <View style={styles.legendItem}>
-              <View style={[styles.colorDot, { backgroundColor: "gold" }]} />
-              <Text style={styles.legendText}>Pendente de aprovação</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-      </Modal>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginHorizontal: 8,
+          }}
+        >
+          <View style={[styles.colorDot, { backgroundColor: "gold" }]} />
+          <Text style={{ fontSize: 12 }}>Pendente de aprovação</Text>
+        </View>
+      </View>
 
       <View style={styles.infoContainer}>
         <Text style={styles.infoText}>

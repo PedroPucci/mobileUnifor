@@ -113,6 +113,41 @@ const styles = StyleSheet.create({
     marginTop: 10,
     color: "#333",
   },
+  datePickerButton: {
+    backgroundColor: "#f5f5f5",
+    padding: 12,
+    borderRadius: 10,
+    marginTop: 10,
+    marginBottom: 8,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+
+  calendarModalContent: {
+    backgroundColor: "#fff",
+    margin: 20,
+    padding: 15,
+    borderRadius: 10,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 5,
+  },
+
+  headerCalendar: {
+    alignItems: "center",
+    marginBottom: 10,
+  },
+
+  headerText: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
 });
 
 export default styles;

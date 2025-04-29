@@ -74,7 +74,6 @@ export default function MarcarPontoScreen({ navigation }) {
 
       <TouchableOpacity style={styles.buttonMarcar}>
         <Feather
-          name="camera"
           size={20}
           color="#fff"
           style={{ marginRight: 10 }}
