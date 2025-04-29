@@ -108,7 +108,6 @@ export default function EnviarSolicitacaoScreen({ navigation }) {
         </TouchableOpacity>
       </Modal>
 
-      {/* Botão que abre o calendário */}
       <TouchableOpacity
         style={styles.datePickerButton}
         onPress={() => setCalendarVisible(true)}
@@ -120,7 +119,6 @@ export default function EnviarSolicitacaoScreen({ navigation }) {
         </Text>
       </TouchableOpacity>
 
-      {/* Modal com calendário */}
       <Modal
         visible={calendarVisible}
         transparent

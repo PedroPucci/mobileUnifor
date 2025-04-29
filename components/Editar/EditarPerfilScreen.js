@@ -65,7 +65,7 @@ export default function EditarPerfilScreen({ navigation }) {
       </View>
 
       <TouchableOpacity style={styles.saveButton}>
-        <MaterialCommunityIcons name="account-edit" size={20} color="#1877f2" />
+        <MaterialCommunityIcons name="account-edit" size={20} color="#fff" />
         <Text style={styles.saveButtonText}>Salvar alterações</Text>
       </TouchableOpacity>
     </View>

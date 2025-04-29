@@ -53,17 +53,17 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    borderColor: "#1877f2",
-    borderWidth: 1,
-    borderRadius: 30,
-    paddingVertical: 10,
+    backgroundColor: "#1877f2", // fundo azul sólido
+    borderRadius: 10,
+    paddingVertical: 15,
     paddingHorizontal: 20,
     marginTop: 10,
-    width: "70%",
+    width: "90%",
   },
   saveButtonText: {
-    color: "#1877f2",
+    color: "#fff", // texto branco
     fontWeight: "bold",
+    fontSize: 16,
     marginLeft: 10,
   },
 });
