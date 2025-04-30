@@ -18,6 +18,7 @@ export default function EnviarSolicitacaoScreen({ navigation }) {
   const [mensagem, setMensagem] = useState("");
   const [calendarVisible, setCalendarVisible] = useState(false);
   const [dataSelecionada, setDataSelecionada] = useState("");
+  const [erroMensagem, setErroMensagem] = useState("");
 
   const options = ["Ausência", "Esquecimento"];
 
@@ -57,11 +58,9 @@ export default function EnviarSolicitacaoScreen({ navigation }) {
       return;
     }
 
-    // Verifica se a data é maior que a data de hoje
     const hoje = new Date();
     const dataSelecionadaObj = new Date(dataSelecionada);
 
-    // Zera as horas para comparar apenas datas
     hoje.setHours(0, 0, 0, 0);
     dataSelecionadaObj.setHours(0, 0, 0, 0);
 
@@ -196,13 +195,31 @@ export default function EnviarSolicitacaoScreen({ navigation }) {
       </Modal>
 
       <TextInput
-        style={styles.textAreaPlaceholder}
+        style={[
+          styles.textAreaPlaceholder,
+          erroMensagem ? { borderColor: "red", borderWidth: 1 } : null,
+        ]}
         multiline
         placeholder="Digite sua solicitação aqui..."
         placeholderTextColor="#999"
         value={mensagem}
-        onChangeText={setMensagem}
+        onChangeText={(text) => {
+          setMensagem(text);
+
+          if (text.length < 10) {
+            setErroMensagem("A mensagem deve ter no mínimo 10 caracteres.");
+          } else if (text.length > 200) {
+            setErroMensagem("A mensagem deve ter no máximo 200 caracteres.");
+          } else {
+            setErroMensagem("");
+          }
+        }}
+        maxLength={500}
       />
+
+      {erroMensagem !== "" && (
+        <Text style={{ color: "red", marginTop: 4 }}>{erroMensagem}</Text>
+      )}
 
       <TouchableOpacity
         style={styles.sendButton}
