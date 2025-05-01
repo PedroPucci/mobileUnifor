@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, Modal, Image } from "react-native";
 import { Calendar } from "react-native-calendars";
 import styles from "./frequenciaScreen.styles";
 import FooterMenu from "../Footer/FooterMenu";
+import BackToHomeButton from "../BackToHome/BackToHomeButton";
 
 export default function FrequenciaScreen({ navigation }) {
   const [selectedDate, setSelectedDate] = useState("");
@@ -14,12 +15,7 @@ export default function FrequenciaScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.buttonVoltar}
-        onPress={() => navigation.goBack()}
-      >
-        <Text style={styles.buttonVoltarText}>Voltar</Text>
-      </TouchableOpacity>
+      <BackToHomeButton navigation={navigation} />
 
       <Image
         source={require("../../assets/logo6.jpg")}

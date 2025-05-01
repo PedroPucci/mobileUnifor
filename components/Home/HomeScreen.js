@@ -15,8 +15,8 @@ export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-        <Feather name="log-out" size={20} color="#1877f2" />
-        <Text style={styles.logoutText}>Logout</Text>
+        <Feather name="log-out" size={25} color="#1877f2" />
+        {/* <Text style={styles.logoutText}>Logout</Text> */}
       </TouchableOpacity>
 
       <Image

@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#1877f2", // fundo azul sólido
+    backgroundColor: "#1877f2",
     borderRadius: 10,
     paddingVertical: 15,
     paddingHorizontal: 20,
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   saveButtonText: {
-    color: "#fff", // texto branco
+    color: "#fff",
     fontWeight: "bold",
     fontSize: 16,
     marginLeft: 10,

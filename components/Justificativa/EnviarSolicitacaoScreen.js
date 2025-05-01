@@ -12,6 +12,7 @@ import { Feather } from "@expo/vector-icons";
 import { Calendar } from "react-native-calendars";
 import styles from "./enviarSolicitacao.styles";
 import FooterMenu from "../Footer/FooterMenu";
+import BackToHomeButton from "../BackToHome/BackToHomeButton";
 
 export default function EnviarSolicitacaoScreen({ navigation }) {
   const [selectedOption, setSelectedOption] = useState("");
@@ -78,12 +79,7 @@ export default function EnviarSolicitacaoScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.buttonVoltar}
-        onPress={() => navigation.navigate("Home")}
-      >
-        <Text style={styles.buttonVoltarText}>Voltar ao ínicio</Text>
-      </TouchableOpacity>
+      <BackToHomeButton navigation={navigation} />
       <Image
         source={require("../../assets/logo6.jpg")}
         style={styles.logo}

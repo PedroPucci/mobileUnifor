@@ -82,8 +82,8 @@ export default StyleSheet.create({
     color: "#333",
   },
   infoContainer: {
-    flexDirection: "row", // <-- Coloca lado a lado
-    justifyContent: "space-between", // Espaço entre os itens
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
     marginTop: 20,
     paddingHorizontal: 10,

@@ -55,7 +55,6 @@ export default function RegisterScreen({ navigation }) {
     }
   };
 
-  // ✅ Função de validação dos campos
   const validarCamposCadastro = (
     nome,
     email,
@@ -96,7 +95,6 @@ export default function RegisterScreen({ navigation }) {
     return true;
   };
 
-  // ✅ Função de validação de email
   const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

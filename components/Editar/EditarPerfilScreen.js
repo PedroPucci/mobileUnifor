@@ -7,9 +7,9 @@ import {
   Image,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import styles from "./editarPerfilScreen.styles";
 import FooterMenu from "../Footer/FooterMenu";
+import BackToHomeButton from "../BackToHome/BackToHomeButton";
 
 export default function EditarPerfilScreen({ navigation }) {
   const [nome, setNome] = useState("");
@@ -19,12 +19,7 @@ export default function EditarPerfilScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.buttonVoltar}
-        onPress={() => navigation.goBack()}
-      >
-        <Text style={styles.buttonVoltarText}>Voltar ao início</Text>
-      </TouchableOpacity>
+      <BackToHomeButton navigation={navigation} />
 
       <Image
         source={require("../../assets/logo6.jpg")}
