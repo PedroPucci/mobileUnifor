@@ -7,6 +7,7 @@ export default function BackToHomeButton({ navigation }) {
     <TouchableOpacity
       style={styles.button}
       onPress={() => navigation.navigate("Home")}
+      accessibilityLabel="Voltar à tela inicial"
     >
       <Feather name="arrow-left-circle" size={24} color="#1877f2" />
     </TouchableOpacity>
