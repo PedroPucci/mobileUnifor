@@ -30,14 +30,14 @@ export default function LoginScreen({ navigation }) {
         resizeMode="contain"
       />
 
+      <Text style={[styles.tituloLogin]}>Seja bem vindo!</Text>
+
       <RegisterLoginTabs
         selected="Entrar"
         onTabChange={(tab) => {
           if (tab === "Registrar") navigation.navigate("Registrar");
         }}
       />
-
-      <Text style={[styles.tituloLogin]}>Seja bem vindo!</Text>
 
       <InputWithIcon
         placeholder="Email"

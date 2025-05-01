@@ -21,6 +21,14 @@ export default function FrequenciaScreen({ navigation }) {
         <Text style={styles.buttonVoltarText}>Voltar</Text>
       </TouchableOpacity>
 
+      <Image
+        source={require("../../assets/logo6.jpg")}
+        style={styles.logo}
+        resizeMode="contain"
+      />
+
+      <Text style={styles.title}>Frequência do usuário</Text>
+
       <View style={styles.calendarCard}>
         <Calendar
           onDayPress={handleDayPress}
@@ -110,15 +118,19 @@ export default function FrequenciaScreen({ navigation }) {
       </View>
 
       <View style={styles.infoContainer}>
-        <Text style={styles.infoText}>
-          Frequência do mês:{"\n"}
-          <Text style={styles.boldText}>100% (49h/49h)</Text>
-        </Text>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.infoText}>
+            Frequência do mês:{"\n"}
+            <Text style={styles.boldText}>100% (49h/49h)</Text>
+          </Text>
+        </View>
 
-        <Text style={[styles.infoText, { marginTop: 20 }]}>
-          Frequência do dia:{"\n"}
-          <Text style={styles.boldText}>36% (2h30m/7h)</Text>
-        </Text>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.infoText}>
+            Frequência do dia:{"\n"}
+            <Text style={styles.boldText}>36% (2h30m/7h)</Text>
+          </Text>
+        </View>
       </View>
 
       <FooterMenu navigation={navigation} />

@@ -24,6 +24,11 @@ export default StyleSheet.create({
     marginTop: 70,
     marginBottom: 20,
   },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 30,
+  },
   dataText: {
     fontSize: 20,
     fontWeight: "bold",

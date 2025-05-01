@@ -16,8 +16,15 @@ export default StyleSheet.create({
     color: "#1877f2",
     fontWeight: "bold",
   },
+  logo: {
+    width: 140,
+    height: 140,
+    alignSelf: "center",
+    marginTop: 10,
+    marginBottom: 20,
+  },
   calendarCard: {
-    marginTop: 70,
+    marginTop: 5,
     backgroundColor: "#f9f9f9",
     borderRadius: 15,
     padding: 10,
@@ -26,6 +33,12 @@ export default StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 30,
+    textAlign: "center",
   },
   headerCalendar: {
     flexDirection: "row",
@@ -69,7 +82,11 @@ export default StyleSheet.create({
     color: "#333",
   },
   infoContainer: {
-    marginTop: 8,
+    flexDirection: "row", // <-- Coloca lado a lado
+    justifyContent: "space-between", // Espaço entre os itens
+    alignItems: "center",
+    marginTop: 20,
+    paddingHorizontal: 10,
   },
   infoText: {
     fontSize: 18,

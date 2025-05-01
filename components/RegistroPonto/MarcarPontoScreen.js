@@ -25,6 +25,8 @@ export default function MarcarPontoScreen({ navigation }) {
         resizeMode="contain"
       />
 
+      <Text style={styles.title}>Enviar Registro de ponto</Text>
+
       <Text style={styles.dataText}>
         {new Date().toLocaleDateString("pt-BR")}
       </Text>
@@ -74,11 +76,7 @@ export default function MarcarPontoScreen({ navigation }) {
       </View>
 
       <TouchableOpacity style={styles.buttonMarcar}>
-        <Feather
-          size={20}
-          color="#fff"
-          style={{ marginRight: 10 }}
-        />
+        <Feather size={20} color="#fff" style={{ marginRight: 10 }} />
         <Text style={styles.buttonMarcarText}>Marcar ponto</Text>
       </TouchableOpacity>
 
