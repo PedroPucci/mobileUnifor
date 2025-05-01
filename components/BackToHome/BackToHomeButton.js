@@ -1,5 +1,6 @@
 import React from "react";
 import { TouchableOpacity, Text, StyleSheet } from "react-native";
+import { Feather } from "@expo/vector-icons";
 
 export default function BackToHomeButton({ navigation }) {
   return (
@@ -7,7 +8,7 @@ export default function BackToHomeButton({ navigation }) {
       style={styles.button}
       onPress={() => navigation.navigate("Home")}
     >
-      <Text style={styles.text}>Voltar ao início</Text>
+      <Feather name="arrow-left-circle" size={24} color="#1877f2" />
     </TouchableOpacity>
   );
 }
