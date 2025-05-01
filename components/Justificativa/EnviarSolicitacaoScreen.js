@@ -11,6 +11,7 @@ import {
 import { Feather } from "@expo/vector-icons";
 import { Calendar } from "react-native-calendars";
 import styles from "./enviarSolicitacao.styles";
+import FooterMenu from "../Footer/FooterMenu";
 
 export default function EnviarSolicitacaoScreen({ navigation }) {
   const [selectedOption, setSelectedOption] = useState("");
@@ -79,16 +80,16 @@ export default function EnviarSolicitacaoScreen({ navigation }) {
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.buttonVoltar}
-        onPress={() => navigation.goBack()}
+        onPress={() => navigation.navigate("Home")}
       >
-        <Text style={styles.buttonVoltarText}>Voltar</Text>
+        <Text style={styles.buttonVoltarText}>Voltar ao ínicio</Text>
       </TouchableOpacity>
-
       <Image
         source={require("../../assets/logo6.jpg")}
         style={styles.logo}
         resizeMode="contain"
       />
+      <Text style={styles.title}>Enviar Justificativa</Text>
 
       <TouchableOpacity
         style={styles.dropdown}
@@ -99,7 +100,6 @@ export default function EnviarSolicitacaoScreen({ navigation }) {
         </Text>
         <Feather name="chevron-down" size={20} color="#999" />
       </TouchableOpacity>
-
       <Modal
         visible={modalVisible}
         transparent
@@ -124,7 +124,6 @@ export default function EnviarSolicitacaoScreen({ navigation }) {
           </View>
         </TouchableOpacity>
       </Modal>
-
       <TouchableOpacity
         style={styles.datePickerButton}
         onPress={() => setCalendarVisible(true)}
@@ -135,7 +134,6 @@ export default function EnviarSolicitacaoScreen({ navigation }) {
             : "Escolha a data"}
         </Text>
       </TouchableOpacity>
-
       <Modal
         visible={calendarVisible}
         transparent
@@ -193,7 +191,6 @@ export default function EnviarSolicitacaoScreen({ navigation }) {
           </View>
         </TouchableOpacity>
       </Modal>
-
       <TextInput
         style={[
           styles.textAreaPlaceholder,
@@ -216,17 +213,16 @@ export default function EnviarSolicitacaoScreen({ navigation }) {
         }}
         maxLength={500}
       />
-
       {erroMensagem !== "" && (
         <Text style={{ color: "red", marginTop: 4 }}>{erroMensagem}</Text>
       )}
-
       <TouchableOpacity
         style={styles.sendButton}
         onPress={handleEnviarSolicitacao}
       >
-        <Text style={styles.sendButtonText}>Enviar solicitação</Text>
+        <Text style={styles.sendButtonText}>Enviar</Text>
       </TouchableOpacity>
+      <FooterMenu navigation={navigation} />
     </View>
   );
 }

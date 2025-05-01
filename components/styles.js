@@ -118,6 +118,11 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
   },
+  scrollContainer: {
+    paddingHorizontal: 20,
+    paddingTop: 60,
+    paddingBottom: 40,
+  },
 });
 
 export default styles;

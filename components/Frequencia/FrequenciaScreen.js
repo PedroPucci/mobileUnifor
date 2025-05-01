@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, TouchableOpacity, Modal, Image } from "react-native";
 import { Calendar } from "react-native-calendars";
 import styles from "./frequenciaScreen.styles";
+import FooterMenu from "../Footer/FooterMenu";
 
 export default function FrequenciaScreen({ navigation }) {
   const [selectedDate, setSelectedDate] = useState("");
@@ -119,6 +120,8 @@ export default function FrequenciaScreen({ navigation }) {
           <Text style={styles.boldText}>36% (2h30m/7h)</Text>
         </Text>
       </View>
+
+      <FooterMenu navigation={navigation} />
     </View>
   );
 }

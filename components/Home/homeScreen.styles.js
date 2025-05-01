@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     padding: 20,
-    justifyContent: "space-between",
+    paddingBottom: 80,
   },
   logoutButton: {
     position: "absolute",
@@ -60,25 +60,6 @@ const styles = StyleSheet.create({
   active: {
     backgroundColor: "#0f62d0",
     borderRadius: 10,
-  },
-  menuContainer: {
-    flexDirection: "row",
-    backgroundColor: "#1877f2",
-    borderRadius: 30,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    justifyContent: "space-around",
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  menuItem: {
-    paddingHorizontal: 10,
-  },
-  separator: {
-    width: 1,
-    height: 30,
-    backgroundColor: "#ffffff55",
-    marginHorizontal: 5,
   },
 });
 

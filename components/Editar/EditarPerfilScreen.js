@@ -9,11 +9,13 @@ import {
 import { Feather } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import styles from "./editarPerfilScreen.styles";
+import FooterMenu from "../Footer/FooterMenu";
 
 export default function EditarPerfilScreen({ navigation }) {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [confirmarSenha, setConfirmarSenha] = useState("");
 
   return (
     <View style={styles.container}>
@@ -21,7 +23,7 @@ export default function EditarPerfilScreen({ navigation }) {
         style={styles.buttonVoltar}
         onPress={() => navigation.goBack()}
       >
-        <Text style={styles.buttonVoltarText}>Voltar</Text>
+        <Text style={styles.buttonVoltarText}>Voltar ao início</Text>
       </TouchableOpacity>
 
       <Image
@@ -63,11 +65,22 @@ export default function EditarPerfilScreen({ navigation }) {
           style={styles.input}
         />
       </View>
+      <View style={styles.inputContainer}>
+        <Feather name="lock" size={20} color="#999" style={styles.icon} />
+        <TextInput
+          placeholder="Confirmar senha"
+          secureTextEntry
+          value={confirmarSenha}
+          onChangeText={setConfirmarSenha}
+          style={styles.input}
+        />
+      </View>
 
       <TouchableOpacity style={styles.saveButton}>
-        <MaterialCommunityIcons name="account-edit" size={20} color="#fff" />
-        <Text style={styles.saveButtonText}>Salvar alterações</Text>
+        <Text style={styles.saveButtonText}>Salvar</Text>
       </TouchableOpacity>
+
+      <FooterMenu navigation={navigation} />
     </View>
   );
 }

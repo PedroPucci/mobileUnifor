@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     paddingTop: 60,
     alignItems: "center",
     paddingHorizontal: 20,
+    paddingBottom: 80,
   },
   buttonVoltar: {
     position: "absolute",
@@ -16,6 +17,11 @@ const styles = StyleSheet.create({
   buttonVoltarText: {
     color: "#1877f2",
     fontWeight: "bold",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 30,
   },
   dropdown: {
     flexDirection: "row",
