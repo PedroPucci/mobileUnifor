@@ -8,17 +8,122 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  Alert,
+  ActivityIndicator,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import styles from "./editarPerfilScreen.styles";
 import FooterMenu from "../Footer/FooterMenu";
 import BackToHomeButton from "../BackToHome/BackToHomeButton";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect } from "react";
 
 export default function EditarPerfilScreen({ navigation }) {
+  const [id, setId] = useState("");
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const carregarId = async () => {
+      const storedId = await AsyncStorage.getItem("userId");
+      if (storedId) {
+        setId(parseInt(storedId));
+      }
+    };
+
+    carregarId();
+  }, []);
+
+  const servidoresPermitidos = ["gmail.com", "hotmail.com"];
+
+  const fetchComTimeout = (url, options, timeout = 5000) => {
+    return Promise.race([
+      fetch(url, options),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Tempo limite excedido")), timeout)
+      ),
+    ]);
+  };
+
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) return false;
+    const dominio = email.split("@")[1]?.toLowerCase();
+    return servidoresPermitidos.includes(dominio);
+  };
+
+  const validarCampos = () => {
+    if (!nome || !email || !senha || !confirmarSenha) {
+      Alert.alert("Erro", "Preencha todos os campos.");
+      return false;
+    }
+
+    if (nome.trim().length < 5) {
+      Alert.alert("Erro", "O nome deve ter pelo menos 5 caracteres.");
+      return false;
+    }
+
+    if (!isValidEmail(email)) {
+      Alert.alert(
+        "Erro",
+        `Email inválido. Use um dos domínios permitidos: ${servidoresPermitidos.join(
+          ", "
+        )}.`
+      );
+      return false;
+    }
+
+    if (senha !== confirmarSenha) {
+      Alert.alert("Erro", "As senhas não coincidem.");
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSalvar = async () => {
+    if (!validarCampos()) return;
+
+    const payload = {
+      id: id,
+      fullName: nome,
+      email: email,
+      password: senha,
+      confirmPassword: confirmarSenha,
+    };
+
+    setLoading(true);
+
+    try {
+      const response = await fetchComTimeout(
+        "http://192.168.0.11:5000/api/v1/users",
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok) {
+        Alert.alert("Sucesso", "Perfil atualizado com sucesso!");
+      } else {
+        Alert.alert("Erro", data.message || "Erro ao atualizar o perfil.");
+      }
+    } catch (err) {
+      const message =
+        err.message === "Tempo limite excedido"
+          ? "A conexão está lenta ou instável. Por favor, tente novamente em instantes."
+          : "Verifique se a API está rodando.";
+      Alert.alert("Erro de conexão", message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -90,8 +195,16 @@ export default function EditarPerfilScreen({ navigation }) {
               />
             </View>
 
-            <TouchableOpacity style={styles.saveButton}>
-              <Text style={styles.saveButtonText}>Salvar</Text>
+            <TouchableOpacity
+              style={[styles.saveButton, loading && { opacity: 0.6 }]}
+              onPress={handleSalvar}
+              disabled={loading}
+            >
+              {loading ? (
+                <ActivityIndicator color="#fff" />
+              ) : (
+                <Text style={styles.saveButtonText}>Salvar</Text>
+              )}
             </TouchableOpacity>
           </View>
         </ScrollView>

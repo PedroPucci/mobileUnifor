@@ -9,18 +9,60 @@ import {
 import InputWithIcon from "../InputWithIcon";
 import RegisterLoginTabs from "../RegisterLoginTabs";
 import styles from "./loginScreen.styles";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
-  const handleLogin = () => {
-    if (email && senha) {
+  // const handleLogin = () => {
+  //   if (email && senha) {
+  //     navigation.navigate("Home");
+  //   } else {
+  //     Alert.alert("Erro", "Verifique se o email e senha estão corretas.");
+  //   }
+  // };
+  const handleLogin = async () => {
+    if (!email || !senha) {
+      Alert.alert("Erro", "Informe o email e a senha.");
+      return;
+    }
+
+    // ✅ Simulação provisória:
+    // Armazena ID fixo para poder testar outras telas
+    await AsyncStorage.setItem("userId", "1"); // id fictício
+    Alert.alert("Sucesso", "Login simulado com sucesso!");
+    navigation.navigate("Home");
+
+    // ✅ Quando o endpoint de login estiver pronto, descomente o bloco abaixo:
+    /*
+  const payload = {
+    email: email,
+    password: senha,
+  };
+
+  try {
+    const response = await fetch("http://192.168.0.11:5000/api/v1/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      await AsyncStorage.setItem("userId", data.id.toString());
+      Alert.alert("Sucesso", "Login realizado com sucesso!");
       navigation.navigate("Home");
     } else {
-      Alert.alert("Erro", "Verifique se o email e senha estão corretas.");
+      Alert.alert("Erro", data.message || "Email ou senha inválidos.");
     }
+  } catch (err) {
+    Alert.alert("Erro de conexão", "Não foi possível conectar com o servidor.");
+  }
+  */
   };
+
 
   return (
     <View style={styles.container}>
