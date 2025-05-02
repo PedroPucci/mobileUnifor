@@ -1,14 +1,22 @@
 import React, { useState } from "react";
-import { View, Text, TouchableOpacity, Image, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  Alert,
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
+} from "react-native";
 import InputWithIcon from "../InputWithIcon";
 import RegisterLoginTabs from "../RegisterLoginTabs";
 import styles from "./registerScreen.styles";
-import { ActivityIndicator } from "react-native";
 
 export default function RegisterScreen({ navigation }) {
   const [selectedTab, setSelectedTab] = useState("Registrar");
   const [loading, setLoading] = useState(false);
-
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -33,7 +41,7 @@ export default function RegisterScreen({ navigation }) {
 
     const payload = {
       fullName: nome,
-      email: email,
+      email,
       password: senha,
       workload: parseInt(cargaHoraria),
       phoneNumber: parseInt(telefone.replace(/\D/g, "")),
@@ -132,68 +140,82 @@ export default function RegisterScreen({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <Image
-        source={require("../../assets/logo6.jpg")}
-        style={styles.logo}
-        resizeMode="contain"
-      />
-
-      <Text style={styles.tituloCadastro}>Criar uma conta</Text>
-      <Text style={styles.subTituloCadastro}>Inscreva-se para começar</Text>
-
-      <RegisterLoginTabs
-        onTabChange={(tab) => {
-          setSelectedTab(tab);
-          if (tab === "Entrar") navigation.navigate("Entrar");
-        }}
-      />
-
-      <InputWithIcon
-        placeholder="Nome completo"
-        icon="user"
-        value={nome}
-        onChangeText={setNome}
-      />
-      <InputWithIcon
-        placeholder="Email"
-        icon="mail"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <InputWithIcon
-        placeholder="Senha"
-        icon="lock"
-        secureText
-        value={senha}
-        onChangeText={setSenha}
-      />
-      <InputWithIcon
-        placeholder="Carga horária mensal"
-        icon="clock"
-        value={cargaHoraria}
-        keyboardType="numeric"
-        onChangeText={(text) => setCargaHoraria(text.replace(/[^0-9]/g, ""))}
-      />
-      <InputWithIcon
-        placeholder="Telefone"
-        icon="phone"
-        value={telefone}
-        keyboardType="numeric"
-        onChangeText={(text) => setTelefone(text.replace(/[^0-9]/g, ""))}
-      />
-
-      <TouchableOpacity
-        style={[styles.button, loading && { opacity: 0.6 }]}
-        onPress={handleRegister}
-        disabled={loading}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1, backgroundColor: "#fff" }}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 0}
+    >
+      <ScrollView
+        style={{ flex: 1, backgroundColor: "#fff" }}
+        contentContainerStyle={styles.scrollContainer}
+        keyboardShouldPersistTaps="handled"
       >
-        {loading ? (
-          <ActivityIndicator color="#fff" />
-        ) : (
-          <Text style={styles.buttonText}>Inscrever-se</Text>
-        )}
-      </TouchableOpacity>
-    </View>
+        <View style={[styles.container, { backgroundColor: "#fff" }]}>
+          <Image
+            source={require("../../assets/logo6.jpg")}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+
+          <Text style={styles.tituloCadastro}>Criar uma conta</Text>
+          <Text style={styles.subTituloCadastro}>Inscreva-se para começar</Text>
+
+          <RegisterLoginTabs
+            onTabChange={(tab) => {
+              setSelectedTab(tab);
+              if (tab === "Entrar") navigation.navigate("Entrar");
+            }}
+          />
+
+          <InputWithIcon
+            placeholder="Nome completo"
+            icon="user"
+            value={nome}
+            onChangeText={setNome}
+          />
+          <InputWithIcon
+            placeholder="Email"
+            icon="mail"
+            value={email}
+            onChangeText={setEmail}
+          />
+          <InputWithIcon
+            placeholder="Senha"
+            icon="lock"
+            secureText
+            value={senha}
+            onChangeText={setSenha}
+          />
+          <InputWithIcon
+            placeholder="Carga horária mensal"
+            icon="clock"
+            value={cargaHoraria}
+            keyboardType="numeric"
+            onChangeText={(text) =>
+              setCargaHoraria(text.replace(/[^0-9]/g, ""))
+            }
+          />
+          <InputWithIcon
+            placeholder="Telefone"
+            icon="phone"
+            value={telefone}
+            keyboardType="numeric"
+            onChangeText={(text) => setTelefone(text.replace(/[^0-9]/g, ""))}
+          />
+
+          <TouchableOpacity
+            style={[styles.button, loading && { opacity: 0.6 }]}
+            onPress={handleRegister}
+            disabled={loading}
+          >
+            {loading ? (
+              <ActivityIndicator color="#fff" />
+            ) : (
+              <Text style={styles.buttonText}>Inscrever-se</Text>
+            )}
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }

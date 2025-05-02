@@ -25,6 +25,11 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
   },
+  scrollContainer: {
+    paddingBottom: 120,
+    paddingTop: 40,
+    backgroundColor: "#fff",
+  },
   tituloCadastro: {
     fontSize: 22,
     fontWeight: "bold",
