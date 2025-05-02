@@ -26,15 +26,54 @@ export default function EditarPerfilScreen({ navigation }) {
   const [confirmarSenha, setConfirmarSenha] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // useEffect(() => {
+  //   const carregarId = async () => {
+  //     const storedId = await AsyncStorage.getItem("userId");
+  //     if (storedId) {
+  //       setId(parseInt(storedId));
+  //     }
+  //   };
+
+  //   carregarId();
+  // }, []);
+
   useEffect(() => {
-    const carregarId = async () => {
-      const storedId = await AsyncStorage.getItem("userId");
-      if (storedId) {
+    const carregarDadosDoUsuario = async () => {
+      try {
+        const storedId = await AsyncStorage.getItem("userId");
+
+        if (!storedId) {
+          Alert.alert("Erro", "ID do usuário não encontrado.");
+          return;
+        }
+
         setId(parseInt(storedId));
+        setLoading(true);
+
+        const response = await fetch(
+          `http://192.168.0.11:5000/api/v1/users/${storedId}`
+        );
+        const data = await response.json();
+
+        if (response.ok) {
+          setNome(data.fullName || "");
+          setEmail(data.email || "");
+          setSenha(data.password || "");
+          setConfirmarSenha(data.password || "");
+        } else {
+          Alert.alert("Erro", data.message || "Erro ao carregar os dados.");
+        }
+      } catch (err) {
+        Alert.alert(
+          "Erro de conexão",
+          "Não foi possível carregar os dados do usuário."
+        );
+      } finally {
+        setLoading(false);
       }
     };
 
-    carregarId();
+    carregarDadosDoUsuario();
   }, []);
 
   const servidoresPermitidos = ["gmail.com", "hotmail.com"];
