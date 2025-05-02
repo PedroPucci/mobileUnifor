@@ -42,27 +42,36 @@ export default function EnviarSolicitacaoScreen({ navigation }) {
     setCalendarVisible(false);
   };
 
-  const handleEnviarSolicitacao = () => {
-    if (!selectedOption || !dataSelecionada || !mensagem.trim()) {
-      Alert.alert("Erro", "Preencha todos os campos antes de enviar.");
-      return;
-    }
+const handleEnviarSolicitacao = () => {
+  if (!selectedOption || !dataSelecionada || !mensagem.trim()) {
+    Alert.alert("Erro", "Preencha todos os campos antes de enviar.");
+    return;
+  }
 
-    const hoje = new Date();
-    const dataSelecionadaObj = new Date(dataSelecionada);
-    hoje.setHours(0, 0, 0, 0);
-    dataSelecionadaObj.setHours(0, 0, 0, 0);
+  if (mensagem.length < 10) {
+    Alert.alert("Erro", "A mensagem deve ter no mínimo 10 caracteres.");
+    return;
+  }
+  if (mensagem.length > 200) {
+    Alert.alert("Erro", "A mensagem deve ter no máximo 200 caracteres.");
+    return;
+  }
 
-    if (dataSelecionadaObj > hoje) {
-      Alert.alert("Erro", "A data da ocorrência não pode ser no futuro.");
-      return;
-    }
+  const hoje = new Date();
+  const dataSelecionadaObj = new Date(dataSelecionada);
+  hoje.setHours(0, 0, 0, 0);
+  dataSelecionadaObj.setHours(0, 0, 0, 0);
 
-    Alert.alert("Sucesso", "Solicitação enviada com sucesso!");
-    setMensagem("");
-    setSelectedOption("");
-    setDataSelecionada("");
-  };
+  if (dataSelecionadaObj > hoje) {
+    Alert.alert("Erro", "A data da ocorrência não pode ser no futuro.");
+    return;
+  }
+
+  Alert.alert("Sucesso", "Solicitação enviada com sucesso!");
+  setMensagem("");
+  setSelectedOption("");
+  setDataSelecionada("");
+};
 
   return (
     <KeyboardAvoidingView
@@ -195,34 +204,14 @@ export default function EnviarSolicitacaoScreen({ navigation }) {
             </Modal>
 
             <TextInput
-              style={[
-                styles.textAreaPlaceholder,
-                erroMensagem ? { borderColor: "red", borderWidth: 1 } : null,
-              ]}
+              style={styles.textAreaPlaceholder}
               multiline
               placeholder="Digite sua solicitação aqui..."
               placeholderTextColor="#999"
               value={mensagem}
-              onChangeText={(text) => {
-                setMensagem(text);
-                if (text.length < 10) {
-                  setErroMensagem(
-                    "A mensagem deve ter no mínimo 10 caracteres."
-                  );
-                } else if (text.length > 200) {
-                  setErroMensagem(
-                    "A mensagem deve ter no máximo 200 caracteres."
-                  );
-                } else {
-                  setErroMensagem("");
-                }
-              }}
+              onChangeText={(text) => setMensagem(text)}
               maxLength={500}
             />
-
-            {erroMensagem !== "" && (
-              <Text style={{ color: "red", marginTop: 4 }}>{erroMensagem}</Text>
-            )}
 
             <TouchableOpacity
               style={styles.sendButton}
