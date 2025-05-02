@@ -6,10 +6,11 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import styles from "../styles";
-import { ActivityIndicator } from "react-native";
+import * as Clipboard from "expo-clipboard";
 
 export default function RecuperarSenhaScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -54,8 +55,7 @@ export default function RecuperarSenhaScreen({ navigation }) {
 
       if (response.ok) {
         Alert.alert("Sucesso", "Verifique na tela a sua nova senha!");
-        console.log("Resposta da API:", data);
-        setNovaSenha(data.message);
+        setNovaSenha(data.message); // ← nova senha vem na propriedade message
         setEmail("");
       } else {
         Alert.alert("Erro", data.message || "Erro ao recuperar senha.");
@@ -98,14 +98,29 @@ export default function RecuperarSenhaScreen({ navigation }) {
         />
       </View>
 
-      <TextInput
-        style={[
-          styles.inputPass,
-          { backgroundColor: "#f2f2f2", color: "#666" },
-        ]}
-        value={novaSenha ?? "A sua senha será exibida aqui!"}
-        editable={false}
-      />
+      <TouchableOpacity
+        disabled={novaSenha === ""}
+        onPress={() => {
+          if (novaSenha) {
+            Clipboard.setStringAsync(novaSenha);
+            Alert.alert(
+              "Senha copiada para a área de transferência!"
+            );
+          }
+        }}
+        style={{
+          backgroundColor: "#f2f2f2",
+          padding: 15,
+          borderRadius: 10,
+          marginVertical: 10,
+          borderColor: "#ccc",
+          borderWidth: 1,
+        }}
+      >
+        <Text style={{ color: "#666", textAlign: "center", fontSize: 16 }}>
+          {novaSenha || "A sua senha será exibida aqui!"}
+        </Text>
+      </TouchableOpacity>
 
       <View style={{ width: "90%" }}>
         <TouchableOpacity
