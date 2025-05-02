@@ -54,7 +54,7 @@ export default function RecuperarSenhaScreen({ navigation }) {
 
       if (response.ok) {
         Alert.alert("Sucesso", "Verifique na tela a sua nova senha!");
-        console.log("Resposta da API:", data); // Veja se existe data.password
+        console.log("Resposta da API:", data);
         setNovaSenha(data.message);
         setEmail("");
       } else {

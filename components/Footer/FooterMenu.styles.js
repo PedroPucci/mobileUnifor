@@ -5,19 +5,6 @@ const { width } = Dimensions.get("window");
 
 const footerStyles = StyleSheet.create({
   menuContainer: {
-    // position: "absolute",
-    // bottom: 0,
-    // left: 0,
-    // width: width,
-    // height: Platform.OS === "ios" ? 80 + getBottomSpace() : 90,
-    // paddingBottom: Platform.OS === "ios" ? getBottomSpace() : 30,
-    // backgroundColor: "#1877f2",
-    // flexDirection: "row",
-    // justifyContent: "space-around",
-    // alignItems: "center",
-    // paddingHorizontal: 10,
-    // borderTopLeftRadius: 12,
-    // borderTopRightRadius: 12,
     position: "absolute",
     bottom: 0,
     left: 0,
