@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#000",
+    color: "purple",
+    fontWeight: "bold",
     alignSelf: "center",
     marginTop: 80,
     marginBottom: 10,

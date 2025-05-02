@@ -14,6 +14,7 @@ import { ActivityIndicator } from "react-native";
 export default function RecuperarSenhaScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+  const [novaSenha, setNovaSenha] = useState("");
 
   const fetchComTimeout = (url, options, timeout = 5000) => {
     return Promise.race([
@@ -52,7 +53,9 @@ export default function RecuperarSenhaScreen({ navigation }) {
       const data = await response.json();
 
       if (response.ok) {
-        Alert.alert("Sucesso", "Uma nova senha foi enviada para seu e-mail!");
+        Alert.alert("Sucesso", "Verifique na tela a sua nova senha!");
+        console.log("Resposta da API:", data); // Veja se existe data.password
+        setNovaSenha(data.message);
         setEmail("");
       } else {
         Alert.alert("Erro", data.message || "Erro ao recuperar senha.");
@@ -100,15 +103,10 @@ export default function RecuperarSenhaScreen({ navigation }) {
           styles.inputPass,
           { backgroundColor: "#f2f2f2", color: "#666" },
         ]}
-        value="A sua senha será exibida aqui!"
+        value={novaSenha ?? "A sua senha será exibida aqui!"}
         editable={false}
       />
 
-      {/* <View style={{ width: "90%" }}>
-        <TouchableOpacity style={styles.botao_azul} onPress={handleRecuperar}>
-          <Text style={styles.texto_botao_branco}>Gerar nova senha</Text>
-        </TouchableOpacity>
-      </View> */}
       <View style={{ width: "90%" }}>
         <TouchableOpacity
           style={[styles.botao_azul, loading && { opacity: 0.6 }]}

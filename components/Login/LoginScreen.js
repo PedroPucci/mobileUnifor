@@ -31,7 +31,7 @@ export default function LoginScreen({ navigation }) {
     // ✅ Simulação provisória:
     // Armazena ID fixo para poder testar outras telas
     await AsyncStorage.setItem("userId", "1"); // id fictício
-    Alert.alert("Sucesso", "Login simulado com sucesso!");
+    //Alert.alert("Sucesso", "Login simulado com sucesso!");
     navigation.navigate("Home");
 
     // ✅ Quando o endpoint de login estiver pronto, descomente o bloco abaixo:
@@ -101,7 +101,7 @@ export default function LoginScreen({ navigation }) {
       </TouchableOpacity>
 
       <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
+        <Text style={styles.buttonText}>Acessar conta</Text>
       </TouchableOpacity>
     </View>
   );
