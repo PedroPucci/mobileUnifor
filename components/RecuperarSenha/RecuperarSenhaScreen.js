@@ -37,14 +37,12 @@ export default function RecuperarSenhaScreen({ navigation }) {
       const data = await response.json();
 
       if (response.ok) {
-        console.log("Recuperando senha...");
         Alert.alert("Sucesso", "Uma nova senha foi enviada para seu e-mail!");
         setEmail("");
       } else {
         Alert.alert("Erro", data.message || "Erro ao recuperar senha.");
       }
     } catch (err) {
-      console.error(err);
       Alert.alert("Erro de conexão", "Verifique se a API está rodando.");
     }
   };
