@@ -5,6 +5,9 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
 } from "react-native";
 import InputWithIcon from "../InputWithIcon";
 import RegisterLoginTabs from "../RegisterLoginTabs";
@@ -22,6 +25,7 @@ export default function LoginScreen({ navigation }) {
   //     Alert.alert("Erro", "Verifique se o email e senha estão corretas.");
   //   }
   // };
+
   const handleLogin = async () => {
     if (!email || !senha) {
       Alert.alert("Erro", "Informe o email e a senha.");
@@ -29,80 +33,90 @@ export default function LoginScreen({ navigation }) {
     }
 
     // ✅ Simulação provisória:
-    // Armazena ID fixo para poder testar outras telas
     await AsyncStorage.setItem("userId", "1"); // id fictício
-    //Alert.alert("Sucesso", "Login simulado com sucesso!");
     navigation.navigate("Home");
 
     // ✅ Quando o endpoint de login estiver pronto, descomente o bloco abaixo:
     /*
-  const payload = {
-    email: email,
-    password: senha,
-  };
+    const payload = {
+      email: email,
+      password: senha,
+    };
 
-  try {
-    const response = await fetch("http://192.168.0.11:5000/api/v1/auth/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+    try {
+      const response = await fetch("http://192.168.0.11:5000/api/v1/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (response.ok) {
-      await AsyncStorage.setItem("userId", data.id.toString());
-      Alert.alert("Sucesso", "Login realizado com sucesso!");
-      navigation.navigate("Home");
-    } else {
-      Alert.alert("Erro", data.message || "Email ou senha inválidos.");
+      if (response.ok) {
+        await AsyncStorage.setItem("userId", data.id.toString());
+        Alert.alert("Sucesso", "Login realizado com sucesso!");
+        navigation.navigate("Home");
+      } else {
+        Alert.alert("Erro", data.message || "Email ou senha inválidos.");
+      }
+    } catch (err) {
+      Alert.alert("Erro de conexão", "Não foi possível conectar com o servidor.");
     }
-  } catch (err) {
-    Alert.alert("Erro de conexão", "Não foi possível conectar com o servidor.");
-  }
-  */
+    */
   };
-
 
   return (
-    <View style={styles.container}>
-      <Image
-        source={require("../../assets/logo6.jpg")}
-        style={styles.logo}
-        resizeMode="contain"
-      />
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
+    >
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View style={styles.container}>
+          <Image
+            source={require("../../assets/logo6.jpg")}
+            style={styles.logo}
+            resizeMode="contain"
+          />
 
-      <Text style={[styles.tituloLogin]}>Seja bem vindo!</Text>
-      <Text style={[styles.subTituloLogin]}>Faça login em sua conta</Text>
+          <Text style={[styles.tituloLogin]}>Seja bem vindo!</Text>
+          <Text style={[styles.subTituloLogin]}>Faça login em sua conta</Text>
 
-      <RegisterLoginTabs
-        selected="Entrar"
-        onTabChange={(tab) => {
-          if (tab === "Registrar") navigation.navigate("Registrar");
-        }}
-      />
+          <RegisterLoginTabs
+            selected="Entrar"
+            onTabChange={(tab) => {
+              if (tab === "Registrar") navigation.navigate("Registrar");
+            }}
+          />
 
-      <InputWithIcon
-        placeholder="Email"
-        icon="mail"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <InputWithIcon
-        placeholder="Senha"
-        icon="lock"
-        secureText
-        value={senha}
-        onChangeText={setSenha}
-      />
+          <InputWithIcon
+            placeholder="Email"
+            icon="mail"
+            value={email}
+            onChangeText={setEmail}
+          />
+          <InputWithIcon
+            placeholder="Senha"
+            icon="lock"
+            secureText
+            value={senha}
+            onChangeText={setSenha}
+          />
 
-      <TouchableOpacity onPress={() => navigation.navigate("RecuperarSenha")}>
-        <Text style={styles.forgot}>Recuperar senha?</Text>
-      </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("RecuperarSenha")}
+          >
+            <Text style={styles.forgot}>Recuperar senha?</Text>
+          </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Acessar conta</Text>
-      </TouchableOpacity>
-    </View>
+          <TouchableOpacity style={styles.button} onPress={handleLogin}>
+            <Text style={styles.buttonText}>Acessar conta</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
