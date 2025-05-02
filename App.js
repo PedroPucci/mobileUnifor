@@ -9,25 +9,32 @@ import EditarPerfilScreen from "./components/Editar/EditarPerfilScreen";
 import EnviarSolicitacaoScreen from "./components/Justificativa/EnviarSolicitacaoScreen";
 import MarcarPontoScreen from "./components/RegistroPonto/MarcarPontoScreen";
 import FrequenciaScreen from "./components/Frequencia/FrequenciaScreen";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Entrar" component={LoginScreen} />
-        <Stack.Screen name="Registrar" component={RegisterScreen} />
-        <Stack.Screen name="RecuperarSenha" component={RecuperarSenhaScreen} />
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="EditarPerfil" component={EditarPerfilScreen} />
-        <Stack.Screen name="MarcarPonto" component={MarcarPontoScreen} />
-        <Stack.Screen name="Frequencia" component={FrequenciaScreen} />
-        <Stack.Screen
-          name="EnviarSolicitacao"
-          component={EnviarSolicitacaoScreen}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <SafeAreaProvider>
+      <NavigationContainer>
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Screen name="Entrar" component={LoginScreen} />
+          <Stack.Screen name="Registrar" component={RegisterScreen} />
+          <Stack.Screen
+            name="RecuperarSenha"
+            component={RecuperarSenhaScreen}
+          />
+          <Stack.Screen name="Home" component={HomeScreen} />
+          <Stack.Screen name="EditarPerfil" component={EditarPerfilScreen} />
+          <Stack.Screen name="MarcarPonto" component={MarcarPontoScreen} />
+          <Stack.Screen name="Frequencia" component={FrequenciaScreen} />
+          <Stack.Screen
+            name="EnviarSolicitacao"
+            component={EnviarSolicitacaoScreen}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
   );
 }
