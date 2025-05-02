@@ -3,9 +3,11 @@ import { View, Text, TouchableOpacity, Image, Alert } from "react-native";
 import InputWithIcon from "../InputWithIcon";
 import RegisterLoginTabs from "../RegisterLoginTabs";
 import styles from "./registerScreen.styles";
+import { ActivityIndicator } from "react-native";
 
 export default function RegisterScreen({ navigation }) {
   const [selectedTab, setSelectedTab] = useState("Registrar");
+  const [loading, setLoading] = useState(false);
 
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
@@ -15,6 +17,54 @@ export default function RegisterScreen({ navigation }) {
 
   const servidoresPermitidos = ["gmail.com", "hotmail.com"];
 
+  const fetchComTimeout = (url, options, timeout = 5000) => {
+    return Promise.race([
+      fetch(url, options),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Tempo limite excedido")), timeout)
+      ),
+    ]);
+  };
+
+  // const handleRegister = async () => {
+  //   if (!validarCamposCadastro(nome, email, senha, cargaHoraria, telefone)) {
+  //     return;
+  //   }
+
+  //   const payload = {
+  //     fullName: nome,
+  //     email: email,
+  //     password: senha,
+  //     workload: parseInt(cargaHoraria),
+  //     phoneNumber: parseInt(telefone.replace(/\D/g, "")),
+  //     createdAt: new Date().toISOString(),
+  //   };
+
+  //   try {
+  //     const response = await fetch("http://192.168.0.11:5000/api/v1/users", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify(payload),
+  //     });
+
+  //     const data = await response.json();
+
+  //     if (response.ok) {
+  //       console.log("Usuário cadastrado, exibindo alerta...");
+  //       Alert.alert("Sucesso", "Usuário cadastrado com sucesso!");
+
+  //       setNome("");
+  //       setEmail("");
+  //       setSenha("");
+  //       setCargaHoraria("");
+  //       setTelefone("");
+  //     } else {
+  //       Alert.alert("Erro", data.message || "Erro ao cadastrar.");
+  //     }
+  //   } catch (err) {
+  //     Alert.alert("Erro de conexão", "Verifique se a API está rodando.");
+  //   }
+  // };
   const handleRegister = async () => {
     if (!validarCamposCadastro(nome, email, senha, cargaHoraria, telefone)) {
       return;
@@ -29,19 +79,22 @@ export default function RegisterScreen({ navigation }) {
       createdAt: new Date().toISOString(),
     };
 
+    setLoading(true);
+
     try {
-      const response = await fetch("http://192.168.0.11:5000/api/v1/users", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const response = await fetchComTimeout(
+        "http://192.168.0.11:5000/api/v1/users",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }
+      );
 
       const data = await response.json();
 
       if (response.ok) {
-        console.log("Usuário cadastrado, exibindo alerta...");
         Alert.alert("Sucesso", "Usuário cadastrado com sucesso!");
-
         setNome("");
         setEmail("");
         setSenha("");
@@ -51,7 +104,13 @@ export default function RegisterScreen({ navigation }) {
         Alert.alert("Erro", data.message || "Erro ao cadastrar.");
       }
     } catch (err) {
-      Alert.alert("Erro de conexão", "Verifique se a API está rodando.");
+      const message =
+        err.message === "Tempo limite excedido"
+          ? "A conexão está lenta ou instável. Por favor, tente novamente em instantes."
+          : "Verifique se a API está rodando.";
+      Alert.alert("Erro de conexão", message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -69,6 +128,11 @@ export default function RegisterScreen({ navigation }) {
 
     if (telefone.length < 8 || telefone.length > 11) {
       Alert.alert("Erro", "Telefone inválido. Informe 8 ou 11 dígitos.");
+      return false;
+    }
+
+    if (nome.trim().length < 5) {
+      Alert.alert("Erro", "O nome deve ter pelo menos 5 caracteres.");
       return false;
     }
 
@@ -158,8 +222,16 @@ export default function RegisterScreen({ navigation }) {
         onChangeText={(text) => setTelefone(text.replace(/[^0-9]/g, ""))}
       />
 
-      <TouchableOpacity style={styles.button} onPress={handleRegister}>
-        <Text style={styles.buttonText}>Inscrever-se</Text>
+      <TouchableOpacity
+        style={[styles.button, loading && { opacity: 0.6 }]}
+        onPress={handleRegister}
+        disabled={loading}
+      >
+        {loading ? (
+          <ActivityIndicator color="#fff" />
+        ) : (
+          <Text style={styles.buttonText}>Inscrever-se</Text>
+        )}
       </TouchableOpacity>
     </View>
   );
