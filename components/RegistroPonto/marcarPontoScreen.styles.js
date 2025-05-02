@@ -25,13 +25,24 @@ export default StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: "bold",
     marginBottom: 30,
+    color: "purple",
+    alignSelf: "center",
+  },
+  subtitle: {
+    fontSize: 14,
+    color: "purple",
+    textAlign: "center",
+    marginBottom: 25,
+    lineHeight: 20,
+    paddingHorizontal: 10,
   },
   dataText: {
     fontSize: 20,
     fontWeight: "bold",
+    color: "purple",
     marginBottom: 30,
   },
   inputContainer: {

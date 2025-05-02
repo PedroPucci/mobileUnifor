@@ -22,6 +22,10 @@ export default function MarcarPontoScreen({ navigation }) {
       />
 
       <Text style={styles.title}>Enviar Registro de ponto</Text>
+      <Text style={styles.subtitle}>
+        Registre aqui seus horários de entrada e saída para manter seu controle
+        de ponto em dia.
+      </Text>
 
       <Text style={styles.dataText}>
         {new Date().toLocaleDateString("pt-BR")}

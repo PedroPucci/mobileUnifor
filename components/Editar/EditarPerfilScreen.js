@@ -134,7 +134,11 @@ export default function EditarPerfilScreen({ navigation }) {
               resizeMode="contain"
             />
 
-            <Text style={styles.title}>Editar perfil</Text>
+            <Text style={styles.title}>Atualizar Perfil</Text>
+            <Text style={styles.subtitle}>
+              Edite suas informações pessoais para manter seu cadastro sempre
+              atualizado
+            </Text>
 
             <View style={styles.inputContainer}>
               <Feather name="user" size={20} color="#999" style={styles.icon} />

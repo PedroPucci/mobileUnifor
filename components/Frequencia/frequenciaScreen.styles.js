@@ -35,10 +35,19 @@ export default StyleSheet.create({
     shadowRadius: 4,
   },
   title: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: "bold",
     marginBottom: 30,
+    color: "purple",
+    alignSelf: "center",
+  },
+  subtitle: {
+    fontSize: 14,
+    color: "purple",
     textAlign: "center",
+    marginBottom: 25,
+    lineHeight: 20,
+    paddingHorizontal: 10,
   },
   headerCalendar: {
     flexDirection: "row",

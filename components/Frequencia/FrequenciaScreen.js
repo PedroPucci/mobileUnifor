@@ -23,7 +23,10 @@ export default function FrequenciaScreen({ navigation }) {
         resizeMode="contain"
       />
 
-      <Text style={styles.title}>Frequência do usuário</Text>
+      <Text style={styles.title}>Painel de Frequência</Text>
+      <Text style={styles.subtitle}>
+        Acompanhe os registros de ponto do mês
+      </Text>
 
       <View style={styles.calendarCard}>
         <Calendar
