@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import FooterMenu from "../Footer/FooterMenu";
 import styles from "./homeScreen.styles";
-
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function HomeScreen({ navigation }) {
   const handleLogout = () => {
@@ -42,9 +42,17 @@ export default function HomeScreen({ navigation }) {
       </View>
 
       <View style={styles.tipBox}>
-        <Text style={styles.tipText}>
-          💡 Dica: Registre sua entrada assim que chegar ao trabalho!
-        </Text>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <MaterialCommunityIcons
+            name="lightbulb-on-outline"
+            size={20}
+            color="#f4c542"
+            style={{ marginRight: 8 }}
+          />
+          <Text style={styles.tipText}>
+            Dica: Registre sua entrada assim que chegar ao trabalho!
+          </Text>
+        </View>
       </View>
 
       <FooterMenu navigation={navigation} />
