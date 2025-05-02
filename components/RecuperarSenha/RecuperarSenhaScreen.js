@@ -19,17 +19,20 @@ export default function RecuperarSenhaScreen({ navigation }) {
       return;
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      Alert.alert("Erro", "Informe um email válido.");
+      return;
+    }
+
     const payload = { email: email };
 
     try {
-      const response = await fetch(
-        "http://192.168.0.11:5000/api/v1/auth",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        }
-      );
+      const response = await fetch("http://192.168.0.11:5000/api/v1/auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
       const data = await response.json();
 
