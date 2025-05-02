@@ -9,9 +9,20 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import styles from "../styles";
+import { ActivityIndicator } from "react-native";
 
 export default function RecuperarSenhaScreen({ navigation }) {
   const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const fetchComTimeout = (url, options, timeout = 5000) => {
+    return Promise.race([
+      fetch(url, options),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error("Tempo limite excedido")), timeout)
+      ),
+    ]);
+  };
 
   const handleRecuperar = async () => {
     if (!email) {
@@ -26,13 +37,17 @@ export default function RecuperarSenhaScreen({ navigation }) {
     }
 
     const payload = { email: email };
+    setLoading(true);
 
     try {
-      const response = await fetch("http://192.168.0.11:5000/api/v1/auth", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
+      const response = await fetchComTimeout(
+        "http://192.168.0.11:5000/api/v1/auth",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        }
+      );
 
       const data = await response.json();
 
@@ -43,7 +58,13 @@ export default function RecuperarSenhaScreen({ navigation }) {
         Alert.alert("Erro", data.message || "Erro ao recuperar senha.");
       }
     } catch (err) {
-      Alert.alert("Erro de conexão", "Verifique se a API está rodando.");
+      const message =
+        err.message === "Tempo limite excedido"
+          ? "A conexão está lenta ou instável. Por favor, tente novamente em instantes."
+          : "Entre em contato com o suporte para verificar o problema.";
+      Alert.alert("Erro de conexão", message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -83,9 +104,22 @@ export default function RecuperarSenhaScreen({ navigation }) {
         editable={false}
       />
 
-      <View style={{ width: "90%" }}>
+      {/* <View style={{ width: "90%" }}>
         <TouchableOpacity style={styles.botao_azul} onPress={handleRecuperar}>
           <Text style={styles.texto_botao_branco}>Gerar nova senha</Text>
+        </TouchableOpacity>
+      </View> */}
+      <View style={{ width: "90%" }}>
+        <TouchableOpacity
+          style={[styles.botao_azul, loading && { opacity: 0.6 }]}
+          onPress={handleRecuperar}
+          disabled={loading}
+        >
+          {loading ? (
+            <ActivityIndicator color="#fff" />
+          ) : (
+            <Text style={styles.texto_botao_branco}>Gerar nova senha</Text>
+          )}
         </TouchableOpacity>
       </View>
 
