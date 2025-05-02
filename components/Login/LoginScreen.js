@@ -31,6 +31,7 @@ export default function LoginScreen({ navigation }) {
       />
 
       <Text style={[styles.tituloLogin]}>Seja bem vindo!</Text>
+      <Text style={[styles.subTituloLogin]}>Faça login em sua conta</Text>
 
       <RegisterLoginTabs
         selected="Entrar"

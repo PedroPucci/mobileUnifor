@@ -114,7 +114,8 @@ export default function RegisterScreen({ navigation }) {
         resizeMode="contain"
       />
 
-      <Text style={styles.tituloCadastro}>Faça seu cadastro!</Text>
+      <Text style={styles.tituloCadastro}>Criar uma conta</Text>
+      <Text style={styles.subTituloCadastro}>Inscreva-se para começar</Text>
 
       <RegisterLoginTabs
         onTabChange={(tab) => {
@@ -158,7 +159,7 @@ export default function RegisterScreen({ navigation }) {
       />
 
       <TouchableOpacity style={styles.button} onPress={handleRegister}>
-        <Text style={styles.buttonText}>Register</Text>
+        <Text style={styles.buttonText}>Inscrever-se</Text>
       </TouchableOpacity>
     </View>
   );

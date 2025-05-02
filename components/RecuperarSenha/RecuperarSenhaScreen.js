@@ -48,7 +48,6 @@ export default function RecuperarSenhaScreen({ navigation }) {
 
   return (
     <View style={styles.container_principal}>
-
       <Image
         source={require("../../assets/logo6.jpg")}
         style={styles.logo}
@@ -57,6 +56,10 @@ export default function RecuperarSenhaScreen({ navigation }) {
 
       <Text style={[styles.texto_contato, { fontSize: 22, marginBottom: 20 }]}>
         Recuperar senha
+      </Text>
+
+      <Text style={[styles.texto_contato, { fontSize: 13, marginBottom: 20 }]}>
+        Informe o email para o qual deseja redefinir sua senha
       </Text>
 
       <View style={styles.inputContainer}>

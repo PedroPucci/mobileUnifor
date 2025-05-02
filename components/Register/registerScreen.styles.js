@@ -32,6 +32,13 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginBottom: 20,
   },
+  subTituloCadastro: {
+    fontSize: 17,
+    fontWeight: "bold",
+    color: "purple",
+    alignSelf: "center",
+    marginBottom: 20,
+  },
 });
 
 export default styles;
