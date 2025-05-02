@@ -26,45 +26,6 @@ export default function RegisterScreen({ navigation }) {
     ]);
   };
 
-  // const handleRegister = async () => {
-  //   if (!validarCamposCadastro(nome, email, senha, cargaHoraria, telefone)) {
-  //     return;
-  //   }
-
-  //   const payload = {
-  //     fullName: nome,
-  //     email: email,
-  //     password: senha,
-  //     workload: parseInt(cargaHoraria),
-  //     phoneNumber: parseInt(telefone.replace(/\D/g, "")),
-  //     createdAt: new Date().toISOString(),
-  //   };
-
-  //   try {
-  //     const response = await fetch("http://192.168.0.11:5000/api/v1/users", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(payload),
-  //     });
-
-  //     const data = await response.json();
-
-  //     if (response.ok) {
-  //       console.log("Usuário cadastrado, exibindo alerta...");
-  //       Alert.alert("Sucesso", "Usuário cadastrado com sucesso!");
-
-  //       setNome("");
-  //       setEmail("");
-  //       setSenha("");
-  //       setCargaHoraria("");
-  //       setTelefone("");
-  //     } else {
-  //       Alert.alert("Erro", data.message || "Erro ao cadastrar.");
-  //     }
-  //   } catch (err) {
-  //     Alert.alert("Erro de conexão", "Verifique se a API está rodando.");
-  //   }
-  // };
   const handleRegister = async () => {
     if (!validarCamposCadastro(nome, email, senha, cargaHoraria, telefone)) {
       return;
