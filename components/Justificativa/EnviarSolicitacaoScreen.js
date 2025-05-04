@@ -17,6 +17,7 @@ import styles from "./enviarSolicitacao.styles";
 import FooterMenu from "../Footer/FooterMenu";
 import BackToHomeButton from "../BackToHome/BackToHomeButton";
 import { BASE_URL, fetchComTimeout } from "../../config/apiConfig";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function EnviarSolicitacaoScreen({ navigation }) {
   const [selectedOption, setSelectedOption] = useState("");
@@ -99,8 +100,8 @@ export default function EnviarSolicitacaoScreen({ navigation }) {
     } catch (err) {
       const msg =
         err.message === "Tempo limite excedido"
-          ? "Conexão lenta ou instável. Tente novamente."
-          : "Erro ao conectar à API.";
+          ? "A conexão está lenta ou instável. Por favor, tente novamente em instantes."
+          : "Entre em contato com o suporte para verificar o problema.";
       Alert.alert("Erro de conexão", msg);
     }
   };

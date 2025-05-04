@@ -65,7 +65,7 @@ export default function RegisterScreen({ navigation }) {
       const message =
         err.message === "Tempo limite excedido"
           ? "A conexão está lenta ou instável. Por favor, tente novamente em instantes."
-          : "Verifique se a API está rodando.";
+          : "Entre em contato com o suporte para verificar o problema.";
       Alert.alert("Erro de conexão", message);
     } finally {
       setLoading(false);

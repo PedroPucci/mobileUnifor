@@ -14,6 +14,7 @@ import BackToHomeButton from "../BackToHome/BackToHomeButton";
 //import AsyncStorage from "@react-native-async-storage/async-storage";
 import Relogio from "../Relogio/Relogio";
 import { BASE_URL, fetchComTimeout } from "../../config/apiConfig";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function MarcarPontoScreen({ navigation }) {
   const [entrada1, setEntrada1] = useState("");
@@ -24,8 +25,8 @@ export default function MarcarPontoScreen({ navigation }) {
 
   useEffect(() => {
     const carregarIdERegistros = async () => {
-      // const id = await AsyncStorage.getItem("userId");
-      const id = 4;
+      const id = await AsyncStorage.getItem("userId");
+      //const id = 4;
       if (!id) return;
 
       setUserId(id);
