@@ -33,7 +33,7 @@ export default function LoginScreen({ navigation }) {
     }
 
     // ✅ Simulação provisória:
-    await AsyncStorage.setItem("userId", "1"); // id fictício
+    await AsyncStorage.setItem("userId", "4"); // id fictício
     navigation.navigate("Home");
 
     // ✅ Quando o endpoint de login estiver pronto, descomente o bloco abaixo:

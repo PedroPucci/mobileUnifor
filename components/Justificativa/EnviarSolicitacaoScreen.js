@@ -16,6 +16,7 @@ import { Calendar } from "react-native-calendars";
 import styles from "./enviarSolicitacao.styles";
 import FooterMenu from "../Footer/FooterMenu";
 import BackToHomeButton from "../BackToHome/BackToHomeButton";
+import { BASE_URL, fetchComTimeout } from "../../config/apiConfig";
 
 export default function EnviarSolicitacaoScreen({ navigation }) {
   const [selectedOption, setSelectedOption] = useState("");
@@ -42,36 +43,67 @@ export default function EnviarSolicitacaoScreen({ navigation }) {
     setCalendarVisible(false);
   };
 
-const handleEnviarSolicitacao = () => {
-  if (!selectedOption || !dataSelecionada || !mensagem.trim()) {
-    Alert.alert("Erro", "Preencha todos os campos antes de enviar.");
-    return;
-  }
+  const handleEnviarSolicitacao = async () => {
+    if (!selectedOption || !dataSelecionada || !mensagem.trim()) {
+      Alert.alert("Erro", "Preencha todos os campos antes de enviar.");
+      return;
+    }
 
-  if (mensagem.length < 10) {
-    Alert.alert("Erro", "A mensagem deve ter no mínimo 10 caracteres.");
-    return;
-  }
-  if (mensagem.length > 200) {
-    Alert.alert("Erro", "A mensagem deve ter no máximo 200 caracteres.");
-    return;
-  }
+    if (mensagem.length < 10) {
+      Alert.alert("Erro", "A mensagem deve ter no mínimo 10 caracteres.");
+      return;
+    }
 
-  const hoje = new Date();
-  const dataSelecionadaObj = new Date(dataSelecionada);
-  hoje.setHours(0, 0, 0, 0);
-  dataSelecionadaObj.setHours(0, 0, 0, 0);
+    if (mensagem.length > 200) {
+      Alert.alert("Erro", "A mensagem deve ter no máximo 200 caracteres.");
+      return;
+    }
 
-  if (dataSelecionadaObj > hoje) {
-    Alert.alert("Erro", "A data da ocorrência não pode ser no futuro.");
-    return;
-  }
+    const hoje = new Date();
+    const dataSelecionadaObj = new Date(dataSelecionada);
+    hoje.setHours(0, 0, 0, 0);
+    dataSelecionadaObj.setHours(0, 0, 0, 0);
 
-  Alert.alert("Sucesso", "Solicitação enviada com sucesso!");
-  setMensagem("");
-  setSelectedOption("");
-  setDataSelecionada("");
-};
+    if (dataSelecionadaObj > hoje) {
+      Alert.alert("Erro", "A data da ocorrência não pode ser no futuro.");
+      return;
+    }
+
+    const storedId = await AsyncStorage.getItem("userId");
+    const payload = {
+      pointId: 0,
+      userId: parseInt(storedId),
+      date: new Date(dataSelecionada).toISOString(),
+      reason: selectedOption + " - " + mensagem,
+      status: 1,
+      createdAt: new Date().toISOString(),
+    };
+
+    try {
+      const response = await fetchComTimeout(`${BASE_URL}/justifications`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        Alert.alert("Sucesso", "Solicitação enviada com sucesso!");
+        setMensagem("");
+        setSelectedOption("");
+        setDataSelecionada("");
+      } else {
+        Alert.alert("Erro", data.message || "Erro ao enviar justificativa.");
+      }
+    } catch (err) {
+      const msg =
+        err.message === "Tempo limite excedido"
+          ? "Conexão lenta ou instável. Tente novamente."
+          : "Erro ao conectar à API.";
+      Alert.alert("Erro de conexão", msg);
+    }
+  };
 
   return (
     <KeyboardAvoidingView

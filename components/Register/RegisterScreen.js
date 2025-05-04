@@ -13,6 +13,7 @@ import {
 import InputWithIcon from "../InputWithIcon";
 import RegisterLoginTabs from "../RegisterLoginTabs";
 import styles from "./registerScreen.styles";
+import { BASE_URL, fetchComTimeout } from "../../config/apiConfig";
 
 export default function RegisterScreen({ navigation }) {
   const [selectedTab, setSelectedTab] = useState("Registrar");
@@ -24,15 +25,6 @@ export default function RegisterScreen({ navigation }) {
   const [telefone, setTelefone] = useState("");
 
   const servidoresPermitidos = ["gmail.com", "hotmail.com"];
-
-  const fetchComTimeout = (url, options, timeout = 5000) => {
-    return Promise.race([
-      fetch(url, options),
-      new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("Tempo limite excedido")), timeout)
-      ),
-    ]);
-  };
 
   const handleRegister = async () => {
     if (!validarCamposCadastro(nome, email, senha, cargaHoraria, telefone)) {
@@ -51,14 +43,11 @@ export default function RegisterScreen({ navigation }) {
     setLoading(true);
 
     try {
-      const response = await fetchComTimeout(
-        "http://192.168.0.11:5000/api/v1/users",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        }
-      );
+      const response = await fetchComTimeout(`${BASE_URL}/users`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
       const data = await response.json();
 

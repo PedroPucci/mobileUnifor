@@ -13,6 +13,7 @@ import FooterMenu from "../Footer/FooterMenu";
 import BackToHomeButton from "../BackToHome/BackToHomeButton";
 //import AsyncStorage from "@react-native-async-storage/async-storage";
 import Relogio from "../Relogio/Relogio";
+import { BASE_URL, fetchComTimeout } from "../../config/apiConfig";
 
 export default function MarcarPontoScreen({ navigation }) {
   const [entrada1, setEntrada1] = useState("");
@@ -31,8 +32,8 @@ export default function MarcarPontoScreen({ navigation }) {
       const hoje = new Date().toISOString().split("T")[0];
 
       try {
-        const response = await fetch(
-          `http://192.168.0.11:5000/api/v1/points/user/${id}/date/${hoje}`,
+        const response = await fetchComTimeout(
+          `${BASE_URL}/points/user/${id}/date/${hoje}`,
           {
             method: "GET",
             headers: { "Content-Type": "application/json" },
@@ -112,7 +113,7 @@ export default function MarcarPontoScreen({ navigation }) {
     }
 
     try {
-      const response = await fetch("http://192.168.0.11:5000/api/v1/points", {
+      const response = await fetchComTimeout(`${BASE_URL}/points`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

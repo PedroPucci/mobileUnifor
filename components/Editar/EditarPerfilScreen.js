@@ -17,6 +17,7 @@ import FooterMenu from "../Footer/FooterMenu";
 import BackToHomeButton from "../BackToHome/BackToHomeButton";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
+import { BASE_URL, fetchComTimeout } from "../../config/apiConfig";
 
 export default function EditarPerfilScreen({ navigation }) {
   const [id, setId] = useState("");
@@ -50,9 +51,14 @@ export default function EditarPerfilScreen({ navigation }) {
         setId(parseInt(storedId));
         setLoading(true);
 
-        const response = await fetch(
-          `http://192.168.0.11:5000/api/v1/users/${storedId}`
+        const response = await fetchComTimeout(
+          `${BASE_URL}/users/${storedId}`,
+          {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          }
         );
+
         const data = await response.json();
 
         if (response.ok) {
@@ -77,15 +83,6 @@ export default function EditarPerfilScreen({ navigation }) {
   }, []);
 
   const servidoresPermitidos = ["gmail.com", "hotmail.com"];
-
-  const fetchComTimeout = (url, options, timeout = 5000) => {
-    return Promise.race([
-      fetch(url, options),
-      new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("Tempo limite excedido")), timeout)
-      ),
-    ]);
-  };
 
   const isValidEmail = (email) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -137,14 +134,11 @@ export default function EditarPerfilScreen({ navigation }) {
     setLoading(true);
 
     try {
-      const response = await fetchComTimeout(
-        "http://192.168.0.11:5000/api/v1/users",
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        }
-      );
+    const response = await fetchComTimeout(`${BASE_URL}/users`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
 
       const data = await response.json();
 

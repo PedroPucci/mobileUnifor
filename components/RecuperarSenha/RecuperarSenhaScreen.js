@@ -11,21 +11,13 @@ import {
 import { Feather } from "@expo/vector-icons";
 import styles from "../styles";
 import * as Clipboard from "expo-clipboard";
+import { BASE_URL, fetchComTimeout } from "../../config/apiConfig";
 
 export default function RecuperarSenhaScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [novaSenha, setNovaSenha] = useState("");
-
-  const fetchComTimeout = (url, options, timeout = 5000) => {
-    return Promise.race([
-      fetch(url, options),
-      new Promise((_, reject) =>
-        setTimeout(() => reject(new Error("Tempo limite excedido")), timeout)
-      ),
-    ]);
-  };
-
+  
   const handleRecuperar = async () => {
     if (!email) {
       Alert.alert("Erro", "Informe o email.");
@@ -42,20 +34,17 @@ export default function RecuperarSenhaScreen({ navigation }) {
     setLoading(true);
 
     try {
-      const response = await fetchComTimeout(
-        "http://192.168.0.11:5000/api/v1/auth",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        }
-      );
+      const response = await fetchComTimeout(`${BASE_URL}/auth`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
       const data = await response.json();
 
       if (response.ok) {
         Alert.alert("Sucesso", "Verifique na tela a sua nova senha!");
-        setNovaSenha(data.message); // ← nova senha vem na propriedade message
+        setNovaSenha(data.message);
         setEmail("");
       } else {
         Alert.alert("Erro", data.message || "Erro ao recuperar senha.");
