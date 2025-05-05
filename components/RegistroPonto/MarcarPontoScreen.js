@@ -11,7 +11,6 @@ import { Feather } from "@expo/vector-icons";
 import styles from "./marcarPontoScreen.styles";
 import FooterMenu from "../Footer/FooterMenu";
 import BackToHomeButton from "../BackToHome/BackToHomeButton";
-//import AsyncStorage from "@react-native-async-storage/async-storage";
 import Relogio from "../Relogio/Relogio";
 import { BASE_URL, fetchComTimeout } from "../../config/apiConfig";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -169,11 +168,6 @@ export default function MarcarPontoScreen({ navigation }) {
         Registre aqui seus horários de entrada e saída para manter seu controle
         de ponto em dia.
       </Text>
-
-      {/* <Text style={styles.dataText}>
-        {new Date().toLocaleDateString("pt-BR")}{" "}
-        {new Date().toLocaleTimeString("pt-BR", { hour12: false })}
-      </Text> */}
 
       <Relogio />
 

@@ -13,9 +13,9 @@ export default function FrequenciaScreen({ navigation }) {
   const [markedDates, setMarkedDates] = useState({});
 
   const statusColors = {
-    1: "gold", // Pendente de aprovação
-    3: "blue", // Presença 100%
-    4: "red", // Ponto não registrado
+    1: "gold",
+    3: "blue",
+    4: "red",
   };
 
   const handleDayPress = (day) => {

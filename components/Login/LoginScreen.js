@@ -32,11 +32,11 @@ export default function LoginScreen({ navigation }) {
       return;
     }
 
-    // ✅ Simulação provisória:
+    // Simulação provisória:
     await AsyncStorage.setItem("userId", "4"); // id fictício
     navigation.navigate("Home");
 
-    // ✅ Quando o endpoint de login estiver pronto, descomente o bloco abaixo:
+    // Quando o endpoint de login estiver pronto, descomente o bloco abaixo:
     /*
     const payload = {
       email: email,
