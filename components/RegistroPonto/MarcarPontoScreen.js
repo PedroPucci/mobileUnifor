@@ -87,10 +87,11 @@ export default function MarcarPontoScreen({ navigation }) {
     }
 
     const horaAtual = getCurrentTime();
-
+    const hojeUtc = new Date().toISOString().split("T")[0] + "T00:00:00Z";
     let campoAtual = "";
     let payload = {
       userId: parseInt(userId),
+      date: hojeUtc,
     };
 
     if (!entrada1) {
