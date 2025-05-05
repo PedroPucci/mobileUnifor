@@ -11,6 +11,134 @@ export default function FrequenciaScreen({ navigation }) {
   const [selectedDate, setSelectedDate] = useState("");
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [markedDates, setMarkedDates] = useState({});
+  const [frequenciaDia, setFrequenciaDia] = useState("0% (0h0m/7h)");
+
+  // const calcularFrequenciaDoDia = (pontos) => {
+  //   let minutosTrabalhados = 0;
+  //   let camposPreenchidos = 0;
+  //   const camposTotais = pontos.length * 4;
+
+  //   pontos.forEach((p) => {
+  //     if (p.morningEntry) camposPreenchidos++;
+  //     if (p.morningExit) camposPreenchidos++;
+  //     if (p.afternoonEntry) camposPreenchidos++;
+  //     if (p.afternoonExit) camposPreenchidos++;
+
+  //     if (p.morningEntry && p.morningExit) {
+  //       const entrada = moment(p.morningEntry, "HH:mm:ss");
+  //       const saida = moment(p.morningExit, "HH:mm:ss");
+  //       minutosTrabalhados += moment.duration(saida.diff(entrada)).asMinutes();
+  //     }
+
+  //     if (p.afternoonEntry && p.afternoonExit) {
+  //       const entrada = moment(p.afternoonEntry, "HH:mm:ss");
+  //       const saida = moment(p.afternoonExit, "HH:mm:ss");
+  //       minutosTrabalhados += moment.duration(saida.diff(entrada)).asMinutes();
+  //     }
+  //   });
+
+  //   const percentual = Math.round((camposPreenchidos / camposTotais) * 100);
+  //   const horas = Math.floor(minutosTrabalhados / 60);
+  //   const minutos = Math.floor(minutosTrabalhados % 60);
+
+  //   setFrequenciaDia(`${percentual}% (${horas}h${minutos}m/7h)`);
+  // };
+
+  // const calcularFrequenciaDoDia = (pontos) => {
+  //   let minutosTrabalhados = 0;
+  //   let camposPreenchidos = 0;
+  //   const camposTotais = 4;
+
+  //   let morningEntry = null;
+  //   let morningExit = null;
+  //   let afternoonEntry = null;
+  //   let afternoonExit = null;
+
+  //   pontos.forEach((p) => {
+  //     if (p.morningEntry && !morningEntry) {
+  //       morningEntry = p.morningEntry;
+  //       camposPreenchidos++;
+  //     }
+  //     if (p.morningExit && !morningExit) {
+  //       morningExit = p.morningExit;
+  //       camposPreenchidos++;
+  //     }
+  //     if (p.afternoonEntry && !afternoonEntry) {
+  //       afternoonEntry = p.afternoonEntry;
+  //       camposPreenchidos++;
+  //     }
+  //     if (p.afternoonExit && !afternoonExit) {
+  //       afternoonExit = p.afternoonExit;
+  //       camposPreenchidos++;
+  //     }
+  //   });
+
+  //   if (morningEntry && morningExit) {
+  //     const entrada = moment(morningEntry, "HH:mm:ss");
+  //     const saida = moment(morningExit, "HH:mm:ss");
+  //     minutosTrabalhados += moment.duration(saida.diff(entrada)).asMinutes();
+  //   }
+
+  //   if (afternoonEntry && afternoonExit) {
+  //     const entrada = moment(afternoonEntry, "HH:mm:ss");
+  //     const saida = moment(afternoonExit, "HH:mm:ss");
+  //     minutosTrabalhados += moment.duration(saida.diff(entrada)).asMinutes();
+  //   }
+
+  //   const percentual = Math.round((camposPreenchidos / camposTotais) * 100);
+  //   const horas = Math.floor(minutosTrabalhados / 60);
+  //   const minutos = Math.floor(minutosTrabalhados % 60);
+
+  //   setFrequenciaDia(`${percentual}% (${horas}h${minutos}m/7h)`);
+  // };
+
+  const calcularFrequenciaDoDia = (pontos) => {
+    let minutosTrabalhados = 0;
+    let camposPreenchidos = 0;
+    const camposTotais = 4;
+
+    let morningEntry = null;
+    let morningExit = null;
+    let afternoonEntry = null;
+    let afternoonExit = null;
+
+    pontos.forEach((p) => {
+      if (p.morningEntry) {
+        morningEntry = p.morningEntry;
+        camposPreenchidos++;
+      }
+      if (p.morningExit) {
+        morningExit = p.morningExit;
+        camposPreenchidos++;
+      }
+      if (p.afternoonEntry) {
+        afternoonEntry = p.afternoonEntry;
+        camposPreenchidos++;
+      }
+      if (p.afternoonExit) {
+        afternoonExit = p.afternoonExit;
+        camposPreenchidos++;
+      }
+    });
+
+    if (morningEntry && morningExit) {
+      const entrada = moment(morningEntry, "HH:mm:ss");
+      const saida = moment(morningExit, "HH:mm:ss");
+      minutosTrabalhados += moment.duration(saida.diff(entrada)).asMinutes();
+    }
+
+    if (afternoonEntry && afternoonExit) {
+      const entrada = moment(afternoonEntry, "HH:mm:ss");
+      const saida = moment(afternoonExit, "HH:mm:ss");
+      minutosTrabalhados += moment.duration(saida.diff(entrada)).asMinutes();
+    }
+
+    const percentual = Math.round((camposPreenchidos / camposTotais) * 100);
+    const horas = Math.floor(minutosTrabalhados / 60);
+    const minutos = Math.floor(minutosTrabalhados % 60);
+
+    setFrequenciaDia(`${percentual}% (${horas}h${minutos}m/7h)`);
+  };
 
   const statusColors = {
     1: "gold",
@@ -21,6 +149,28 @@ export default function FrequenciaScreen({ navigation }) {
   const handleDayPress = (day) => {
     setSelectedDate(day.dateString);
   };
+
+  useEffect(() => {
+    const fetchFrequenciaDoDia = async () => {
+      try {
+        const userId = 4;
+        const hoje = moment().format("YYYY-MM-DD");
+
+        const response = await fetchComTimeout(
+          `${BASE_URL}/points/user/${userId}/frequencies/${hoje}`
+        );
+
+        if (!response.ok) return;
+
+        const data = await response.json();
+        calcularFrequenciaDoDia(data);
+      } catch (err) {
+        console.warn("Erro ao buscar frequência do dia", err);
+      }
+    };
+
+    fetchFrequenciaDoDia();
+  }, []);
 
   useEffect(() => {
     const fetchPontos = async () => {
@@ -198,10 +348,16 @@ export default function FrequenciaScreen({ navigation }) {
           </Text>
         </View>
 
-        <View style={{ flex: 1 }}>
+        {/* <View style={{ flex: 1 }}>
           <Text style={styles.infoText}>
             Frequência do dia:{"\n"}
             <Text style={styles.boldText}>36% (2h30m/7h)</Text>
+          </Text>
+        </View> */}
+        <View style={{ flex: 1 }}>
+          <Text style={styles.infoText}>
+            Frequência do dia:{"\n"}
+            <Text style={styles.boldText}>{frequenciaDia}</Text>
           </Text>
         </View>
       </View>

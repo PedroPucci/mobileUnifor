@@ -98,9 +98,9 @@ export default function RegisterScreen({ navigation }) {
     if (
       isNaN(cargaHorariaInt) ||
       cargaHorariaInt < 10 ||
-      cargaHorariaInt > 100
+      cargaHorariaInt > 1000
     ) {
-      Alert.alert("Erro", "Carga horária deve ser entre 10 e 100 horas.");
+      Alert.alert("Erro", "Carga horária deve ser entre 10 e 1000 horas.");
       return false;
     }
 
