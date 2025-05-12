@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, TouchableOpacity, Modal, Image } from "react-native";
+import { View, Text, Image } from "react-native";
 import { Calendar } from "react-native-calendars";
 import styles from "./frequenciaScreen.styles";
 import FooterMenu from "../Footer/FooterMenu";
@@ -9,88 +9,9 @@ import { BASE_URL, fetchComTimeout } from "../../config/apiConfig";
 
 export default function FrequenciaScreen({ navigation }) {
   const [selectedDate, setSelectedDate] = useState("");
-  const [tooltipVisible, setTooltipVisible] = useState(false);
   const [markedDates, setMarkedDates] = useState({});
-  const [frequenciaDia, setFrequenciaDia] = useState("0% (0h0m/7h)");
-
-  // const calcularFrequenciaDoDia = (pontos) => {
-  //   let minutosTrabalhados = 0;
-  //   let camposPreenchidos = 0;
-  //   const camposTotais = pontos.length * 4;
-
-  //   pontos.forEach((p) => {
-  //     if (p.morningEntry) camposPreenchidos++;
-  //     if (p.morningExit) camposPreenchidos++;
-  //     if (p.afternoonEntry) camposPreenchidos++;
-  //     if (p.afternoonExit) camposPreenchidos++;
-
-  //     if (p.morningEntry && p.morningExit) {
-  //       const entrada = moment(p.morningEntry, "HH:mm:ss");
-  //       const saida = moment(p.morningExit, "HH:mm:ss");
-  //       minutosTrabalhados += moment.duration(saida.diff(entrada)).asMinutes();
-  //     }
-
-  //     if (p.afternoonEntry && p.afternoonExit) {
-  //       const entrada = moment(p.afternoonEntry, "HH:mm:ss");
-  //       const saida = moment(p.afternoonExit, "HH:mm:ss");
-  //       minutosTrabalhados += moment.duration(saida.diff(entrada)).asMinutes();
-  //     }
-  //   });
-
-  //   const percentual = Math.round((camposPreenchidos / camposTotais) * 100);
-  //   const horas = Math.floor(minutosTrabalhados / 60);
-  //   const minutos = Math.floor(minutosTrabalhados % 60);
-
-  //   setFrequenciaDia(`${percentual}% (${horas}h${minutos}m/7h)`);
-  // };
-
-  // const calcularFrequenciaDoDia = (pontos) => {
-  //   let minutosTrabalhados = 0;
-  //   let camposPreenchidos = 0;
-  //   const camposTotais = 4;
-
-  //   let morningEntry = null;
-  //   let morningExit = null;
-  //   let afternoonEntry = null;
-  //   let afternoonExit = null;
-
-  //   pontos.forEach((p) => {
-  //     if (p.morningEntry && !morningEntry) {
-  //       morningEntry = p.morningEntry;
-  //       camposPreenchidos++;
-  //     }
-  //     if (p.morningExit && !morningExit) {
-  //       morningExit = p.morningExit;
-  //       camposPreenchidos++;
-  //     }
-  //     if (p.afternoonEntry && !afternoonEntry) {
-  //       afternoonEntry = p.afternoonEntry;
-  //       camposPreenchidos++;
-  //     }
-  //     if (p.afternoonExit && !afternoonExit) {
-  //       afternoonExit = p.afternoonExit;
-  //       camposPreenchidos++;
-  //     }
-  //   });
-
-  //   if (morningEntry && morningExit) {
-  //     const entrada = moment(morningEntry, "HH:mm:ss");
-  //     const saida = moment(morningExit, "HH:mm:ss");
-  //     minutosTrabalhados += moment.duration(saida.diff(entrada)).asMinutes();
-  //   }
-
-  //   if (afternoonEntry && afternoonExit) {
-  //     const entrada = moment(afternoonEntry, "HH:mm:ss");
-  //     const saida = moment(afternoonExit, "HH:mm:ss");
-  //     minutosTrabalhados += moment.duration(saida.diff(entrada)).asMinutes();
-  //   }
-
-  //   const percentual = Math.round((camposPreenchidos / camposTotais) * 100);
-  //   const horas = Math.floor(minutosTrabalhados / 60);
-  //   const minutos = Math.floor(minutosTrabalhados % 60);
-
-  //   setFrequenciaDia(`${percentual}% (${horas}h${minutos}m/7h)`);
-  // };
+  const [frequenciaDia, setFrequenciaDia] = useState("0% (0h0m)");
+  const [frequenciaMes, setFrequenciaMes] = useState("0%");
 
   const calcularFrequenciaDoDia = (pontos) => {
     let minutosTrabalhados = 0;
@@ -137,7 +58,7 @@ export default function FrequenciaScreen({ navigation }) {
     const horas = Math.floor(minutosTrabalhados / 60);
     const minutos = Math.floor(minutosTrabalhados % 60);
 
-    setFrequenciaDia(`${percentual}% (${horas}h${minutos}m/7h)`);
+    setFrequenciaDia(`${percentual}% (${horas}h${minutos}m)`);
   };
 
   const statusColors = {
@@ -186,23 +107,13 @@ export default function FrequenciaScreen({ navigation }) {
           return;
         }
 
-        const contentType = response.headers.get("content-type");
-        if (!contentType || !contentType.includes("application/json")) {
-          console.warn("Resposta não é JSON.");
-          setMarkedDates({});
-          return;
-        }
-
         const pontos = await response.json();
-
         const hoje = moment();
         const mesAtual = hoje.month();
         const anoAtual = hoje.year();
-
         const markings = {};
 
         pontos.forEach((ponto) => {
-          //const data = moment(ponto.date);
           const data = moment(ponto.date);
           if (
             data.month() === mesAtual &&
@@ -213,14 +124,8 @@ export default function FrequenciaScreen({ navigation }) {
             if (cor) {
               markings[data.format("YYYY-MM-DD")] = {
                 customStyles: {
-                  container: {
-                    backgroundColor: cor,
-                    borderRadius: 4,
-                  },
-                  text: {
-                    color: "white",
-                    fontWeight: "bold",
-                  },
+                  container: { backgroundColor: cor, borderRadius: 4 },
+                  text: { color: "white", fontWeight: "bold" },
                 },
               };
             }
@@ -228,6 +133,51 @@ export default function FrequenciaScreen({ navigation }) {
         });
 
         setMarkedDates(markings);
+
+        // Calcular frequência do mês
+        const diasValidos = [];
+        const hojeAtual = moment().startOf("day");
+        let d = moment().startOf("month");
+
+        while (d.isSameOrBefore(hojeAtual, "day")) {
+          const diaSemana = d.day(); // 0 = domingo, 6 = sábado
+          if (diaSemana !== 0 && diaSemana !== 6) {
+            diasValidos.push(d.format("YYYY-MM-DD"));
+          }
+          d.add(1, "day");
+        }
+
+        const diasTrabalhados = new Set();
+        pontos.forEach((p) => {
+          const data = moment(p.date);
+          const dia = data.format("YYYY-MM-DD");
+
+          const isMesAtual =
+            data.month() === mesAtual && data.year() === anoAtual;
+
+          const temPonto =
+            p.morningEntry ||
+            p.morningExit ||
+            p.afternoonEntry ||
+            p.afternoonExit;
+
+          if (isMesAtual && temPonto) {
+            diasTrabalhados.add(dia);
+          }
+        });
+
+        const diasComPontoValidos = Array.from(diasTrabalhados).filter((dia) =>
+          diasValidos.includes(dia)
+        );
+
+        const percentualMes =
+          diasValidos.length === 0
+            ? 0
+            : Math.round(
+                (diasComPontoValidos.length / diasValidos.length) * 100
+              );
+
+        setFrequenciaMes(`${percentualMes}%`);
       } catch (error) {
         console.error("Erro ao carregar pontos:", error);
         setMarkedDates({});
@@ -240,13 +190,11 @@ export default function FrequenciaScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <BackToHomeButton navigation={navigation} />
-
       <Image
         source={require("../../assets/logo6.jpg")}
         style={styles.logo}
         resizeMode="contain"
       />
-
       <Text style={styles.title}>Painel de Frequência</Text>
       <Text style={styles.subtitle}>
         Acompanhe os registros de ponto do mês
@@ -256,8 +204,8 @@ export default function FrequenciaScreen({ navigation }) {
         <Calendar
           onDayPress={handleDayPress}
           markedDates={markedDates}
-          markingType={"custom"}
-          monthFormat={"MMMM yyyy"}
+          markingType="custom"
+          monthFormat="MMMM yyyy"
           firstDay={1}
           hideExtraDays={false}
           renderHeader={(date) => {
@@ -344,16 +292,9 @@ export default function FrequenciaScreen({ navigation }) {
         <View style={{ flex: 1 }}>
           <Text style={styles.infoText}>
             Frequência do mês:{"\n"}
-            <Text style={styles.boldText}>100% (49h/49h)</Text>
+            <Text style={styles.boldText}>{frequenciaMes}</Text>
           </Text>
         </View>
-
-        {/* <View style={{ flex: 1 }}>
-          <Text style={styles.infoText}>
-            Frequência do dia:{"\n"}
-            <Text style={styles.boldText}>36% (2h30m/7h)</Text>
-          </Text>
-        </View> */}
         <View style={{ flex: 1 }}>
           <Text style={styles.infoText}>
             Frequência do dia:{"\n"}

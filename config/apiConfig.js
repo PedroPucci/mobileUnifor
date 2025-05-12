@@ -10,7 +10,7 @@
 // config/apiConfig.js
 
 const LOCAL = "http://192.168.0.12:5000/api/v1";
-const PROD = "https://api.suaapiemproducao.com/v1"; // pode deixar assim por enquanto
+const PROD = "https://discplinamobilenoite.onrender.com/api/v1"; // sua URL real
 
 const BASE_URL = __DEV__ ? LOCAL : PROD;
 
