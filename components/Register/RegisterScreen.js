@@ -36,7 +36,8 @@ export default function RegisterScreen({ navigation }) {
       email,
       password: senha,
       workload: parseInt(cargaHoraria),
-      phoneNumber: parseInt(telefone.replace(/\D/g, "")),
+      // phoneNumber: parseInt(telefone.replace(/\D/g, "")),
+      phoneNumber: telefone.replace(/\D/g, ""),
       createdAt: new Date().toISOString(),
     };
 
@@ -84,10 +85,12 @@ export default function RegisterScreen({ navigation }) {
       return false;
     }
 
-    if (telefone.length < 8 || telefone.length > 11) {
-      Alert.alert("Erro", "Telefone inválido. Informe 8 ou 11 dígitos.");
-      return false;
-    }
+
+    // const apenasNumeros = telefone.replace(/\D/g, "");
+    // if (apenasNumeros.length < 8) {
+    //   Alert.alert("Erro", "Telefone inválido. Informe 8 ou 11 dígitos.");
+    //   return false;
+    // }
 
     if (nome.trim().length < 5) {
       Alert.alert("Erro", "O nome deve ter pelo menos 5 caracteres.");

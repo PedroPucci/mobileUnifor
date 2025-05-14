@@ -74,7 +74,8 @@ export default function EnviarSolicitacaoScreen({ navigation }) {
     const payload = {
       pointId: 0,
       userId: parseInt(storedId),
-      date: new Date(dataSelecionada).toISOString(),
+      // date: new Date(dataSelecionada).toISOString(),
+      date: `${dataSelecionada}T12:00:00Z`,
       reason: selectedOption + " - " + mensagem,
       status: 1,
       createdAt: new Date().toISOString(),

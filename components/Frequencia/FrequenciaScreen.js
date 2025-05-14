@@ -117,7 +117,8 @@ export default function FrequenciaScreen({ navigation }) {
         const markings = {};
 
         pontos.forEach((ponto) => {
-          const data = moment(ponto.date);
+          // const data = moment(ponto.date);
+          const data = moment.utc(ponto.date).local();
           if (
             data.month() === mesAtual &&
             data.year() === anoAtual &&
