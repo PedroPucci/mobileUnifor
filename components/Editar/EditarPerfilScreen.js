@@ -27,17 +27,6 @@ export default function EditarPerfilScreen({ navigation }) {
   const [confirmarSenha, setConfirmarSenha] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   const carregarId = async () => {
-  //     const storedId = await AsyncStorage.getItem("userId");
-  //     if (storedId) {
-  //       setId(parseInt(storedId));
-  //     }
-  //   };
-
-  //   carregarId();
-  // }, []);
-
   useEffect(() => {
     const carregarDadosDoUsuario = async () => {
       try {

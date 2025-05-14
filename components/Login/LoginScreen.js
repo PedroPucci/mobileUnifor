@@ -13,18 +13,11 @@ import InputWithIcon from "../InputWithIcon";
 import RegisterLoginTabs from "../RegisterLoginTabs";
 import styles from "./loginScreen.styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { BASE_URL, fetchComTimeout } from "../../config/apiConfig";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-
-  // const handleLogin = () => {
-  //   if (email && senha) {
-  //     navigation.navigate("Home");
-  //   } else {
-  //     Alert.alert("Erro", "Verifique se o email e senha estão corretas.");
-  //   }
-  // };
 
   const handleLogin = async () => {
     if (!email || !senha) {
@@ -32,37 +25,33 @@ export default function LoginScreen({ navigation }) {
       return;
     }
 
-    // Simulação provisória:
-    await AsyncStorage.setItem("userId", "4"); // id fictício
-    navigation.navigate("Home");
-
-    // Quando o endpoint de login estiver pronto, descomente o bloco abaixo:
-    /*
-    const payload = {
-      email: email,
-      password: senha,
-    };
-
     try {
-      const response = await fetch("http://192.168.0.11:5000/api/v1/auth/login", {
-        method: "POST",
+      const response = await fetchComTimeout(`${BASE_URL}/users/by-credentials?email=${encodeURIComponent(
+          email
+        )}&senha=${encodeURIComponent(senha)}`, {
+        method: "GET",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
       });
 
-      const data = await response.json();
+      if (response.status === 200) {
+        const userId = await response.json();
 
-      if (response.ok) {
-        await AsyncStorage.setItem("userId", data.id.toString());
-        Alert.alert("Sucesso", "Login realizado com sucesso!");
-        navigation.navigate("Home");
+        if (userId === null) {
+          Alert.alert("Erro", "Usuário ou senha não encontrados.");
+          return;
+        }
+
+        await AsyncStorage.setItem("userId", userId.toString());
+        navigation.navigate("Home", { userId });
       } else {
-        Alert.alert("Erro", data.message || "Email ou senha inválidos.");
+        Alert.alert("Erro", "Usuário ou senha não encontrados.");
       }
     } catch (err) {
-      Alert.alert("Erro de conexão", "Não foi possível conectar com o servidor.");
+      Alert.alert(
+        "Erro de conexão",
+        "Não foi possível conectar com o servidor."
+      );
     }
-    */
   };
 
   return (
@@ -82,8 +71,8 @@ export default function LoginScreen({ navigation }) {
             resizeMode="contain"
           />
 
-          <Text style={[styles.tituloLogin]}>Seja bem vindo!</Text>
-          <Text style={[styles.subTituloLogin]}>Faça login em sua conta</Text>
+          <Text style={styles.tituloLogin}>Seja bem vindo!</Text>
+          <Text style={styles.subTituloLogin}>Faça login em sua conta</Text>
 
           <RegisterLoginTabs
             selected="Entrar"

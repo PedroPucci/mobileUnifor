@@ -9,7 +9,7 @@
 
 // config/apiConfig.js
 
-const LOCAL = "http://192.168.0.12:5000/api/v1";
+const LOCAL = "http://192.168.0.9:5000/api/v1";
 const PROD = "https://discplinamobilenoite.onrender.com/api/v1"; // sua URL real
 
 const BASE_URL = __DEV__ ? LOCAL : PROD;

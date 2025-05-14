@@ -6,6 +6,7 @@ import FooterMenu from "../Footer/FooterMenu";
 import BackToHomeButton from "../BackToHome/BackToHomeButton";
 import moment from "moment";
 import { BASE_URL, fetchComTimeout } from "../../config/apiConfig";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function FrequenciaScreen({ navigation }) {
   const [selectedDate, setSelectedDate] = useState("");
@@ -74,9 +75,10 @@ export default function FrequenciaScreen({ navigation }) {
   useEffect(() => {
     const fetchFrequenciaDoDia = async () => {
       try {
-        const userId = 4;
+        //const userId = 8;
+        const userId = await AsyncStorage.getItem("userId");
         const hoje = moment().format("YYYY-MM-DD");
-
+        
         const response = await fetchComTimeout(
           `${BASE_URL}/points/user/${userId}/frequencies/${hoje}`
         );
@@ -96,7 +98,8 @@ export default function FrequenciaScreen({ navigation }) {
   useEffect(() => {
     const fetchPontos = async () => {
       try {
-        const userId = 4;
+        //const userId = 8;
+        const userId = await AsyncStorage.getItem("userId");
         const response = await fetchComTimeout(
           `${BASE_URL}/points/user/${userId}`
         );
@@ -134,13 +137,12 @@ export default function FrequenciaScreen({ navigation }) {
 
         setMarkedDates(markings);
 
-        // Calcular frequência do mês
         const diasValidos = [];
         const hojeAtual = moment().startOf("day");
         let d = moment().startOf("month");
 
         while (d.isSameOrBefore(hojeAtual, "day")) {
-          const diaSemana = d.day(); // 0 = domingo, 6 = sábado
+          const diaSemana = d.day();
           if (diaSemana !== 0 && diaSemana !== 6) {
             diasValidos.push(d.format("YYYY-MM-DD"));
           }
